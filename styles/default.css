@@ -1,0 +1,523 @@
+/* PSXDB 0.4/REDUMP alpha skin by Dremora */
+
+/***********/
+/* General */
+/***********/
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body, html {
+	background: #f9fafa url('/images/tile.png') top left repeat-x;
+	color: #202020;
+	cursor: default;
+	font: 12px Verdana;
+}
+
+img {
+	border: none;
+}
+
+a, a:link, a:visited {
+	text-decoration: none;
+	cursor: default;
+	color: #375fdb;
+}
+
+a:visited {
+	color: #2947a3;
+}
+
+a:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+a:active {
+	color: #a4b6ef;
+}
+
+a.external {
+	background: transparent url(/images/external.png) no-repeat scroll right center;
+	padding-right: 13px;
+}
+
+table {
+	border-spacing: 0;
+}
+
+td, th {
+	vertical-align: top;
+}
+
+th {
+	font-weight: bold;
+}
+
+ul, ol {
+	margin: 3px 5px 3px 25px;
+}
+
+blockquote {
+	border: 1px solid #aca899;
+	padding: 6px;
+	background-color: #ffffff;
+	white-space: pre;
+	font-family: monaco, courier, monospace;
+}
+
+h1 {
+	margin: 5px 25px;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+h2 {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin: 5px 25px;
+	font-size: 16px;
+}
+
+h3 {
+	background-color: #ffffff;
+	border: 1px solid #e5e5e5;
+	font: bold 16px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin: 0.6em 15px 0;
+	padding: 0.4em 0.6em;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-right {
+	text-align: right;
+}
+	
+.float-right {
+	float: right;
+}
+
+.small {
+	font-size: 10px;
+	font-weight: normal;
+}
+
+.image-right {
+	float: right;
+	clear: both;
+}
+
+.image-right a img {
+	margin: 3px;
+}
+
+.st {
+	text-decoration: line-through;
+}
+
+/********/
+/* Text */
+/********/
+
+.textblock {
+	background: #fefefe url('/images/gradient.png') repeat-x top right;
+	border: 1px solid #e5e5e5;
+	font: 13px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin: 0 15px 0.6em;
+	padding: 0.4em 0.6em;
+}
+
+.textinfo {
+	font-size: 12px;
+	padding: 3px 0px 3px 26px;
+	font-weight: bold;
+	background-image: url('/images/arrow-small.png');
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+.error {
+	margin: 5px 15px;
+	border: 1px solid #ffcccc;
+	background: #ffeeee;
+	padding: 5px;
+}
+
+/********/
+/* Main */
+/********/
+
+#header {
+	background: url('/images/logo-right.png') no-repeat top right;
+	height: 79px;
+	min-width: 970px;
+}
+
+.menu {
+	background: url('/images/menu.png') repeat-x top left;
+	font-family: Verdana, Tahoma;
+	height: 30px;
+	min-width: 950px;
+	padding: 1px 35px 0px 15px;
+}
+
+.menu a, .menu a:link, .menu a:visited {
+	color: #202020;
+	padding: 0px 11px;
+	font-size: 16px;
+	letter-spacing: 1px;
+	text-decoration: none;
+	font-weight: bold;
+	width: 18px;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
+}
+
+.menu a:hover {
+	color: #aaaaaa;
+}
+
+.menu a.menu-selected {
+	color: #aaaaaa;
+	background-color: #fcfcfc;
+	border-color: #e5e5e5;
+}
+
+.submenu {
+	background-color: #fcfcfc;
+	border: 1px solid #e5e5e5;
+	border-top: none;
+	display: none;
+	position: absolute;
+}
+
+.submenu a, .submenu a:link, .submenu a:visited {
+	color: #202020;
+	display: block;
+	padding: 1px 10px;
+	text-decoration: none;
+}
+
+.submenu a:hover {
+	color: #375fdb;
+}
+
+#quicksearch {
+	float: right;
+	text-align: right;
+	width: auto;
+	color: #aaaaaa;
+	padding: 1px 3px;
+	letter-spacing: 1px;
+	background-color: transparent;
+	border-width: 0px;
+	font-size: 14px;
+}
+
+#quicksearch:focus {
+	color: #202020;
+}
+
+#main {
+	min-width: 1000px;
+}
+
+#footer {
+	border-top: 1px solid #e5e5e5;
+	font-size: 10px;
+	line-height: 10px;
+	min-height: 20px;
+	margin: 5px 15px;
+	padding: 2px 0 0 2px;
+}
+
+#footer img {
+	float: right;
+}
+
+/**************/
+/* Main links */
+/**************/
+
+.mainlinks {
+	background-color: #ffffef;
+	border: 1px solid #efceba;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	margin: 5px auto;
+	padding: 3px 7px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.mainlinks th {
+	font-weight: bold;
+	background-color: #f1f1f1;
+}
+
+.mainlinks td, .mainlinks th {
+	padding: 2px 5px;
+}
+
+/*******************/
+/* Games list page */
+/*******************/
+
+.filter {
+	font-size: 10px;
+	padding: 4px 8px;
+}
+
+.filter img {
+	vertical-align: -2px;
+}
+
+.gamesblock {
+	background: #fefefe url('/images/gradient.png') repeat-x top right;
+	border: 1px solid #e5e5e5;
+	margin: 0.6em 15px;
+}
+
+.games {
+	width: 100%;
+}
+
+.games img {
+	vertical-align: -1px;
+}
+
+.games tr {
+	padding: 0 5px;
+}
+
+.games tr:hover {
+	background-color: #f1f1f1;
+	color: #777777;
+}
+
+tr.th:hover {
+	background-color: transparent;
+}
+
+.games th {
+	font-weight: bold;
+	padding: 3px 2px;
+}
+
+.games td a, .games td a:link, .games td a:visited {
+	color: #202020;
+	text-decoration: none;
+	display: block;
+}
+
+.games td {
+	padding: 1px 2px;
+}
+
+.games th a, .games th a:link, .games th a:hover {
+	color: #202020;
+	display: block;
+}
+
+.games th a:hover {
+	color: #777777;
+	text-decoration: none;
+}
+
+td.havemiss, th.havemiss {
+	background-color: #eeeeee;
+	border-right: 1px solid #e5e5e5;
+	text-align: center;
+}
+
+/******************/
+/* Disc info page */
+/******************/
+
+.tools {
+	font-size: 11px;
+	background: #ffffff;
+	border: 1px solid #e5e5e5;
+	margin: 0.4em 15px ;
+	padding: 0.4em 0.6em;
+	
+}
+
+.game {
+	overflow: hidden;
+	background-color: #f9fafa;
+	border: 1px solid #e5e5e5;
+	border-width: 1px 0;
+	margin: 0 15px 5px;
+}
+
+.gameinfo, .dumpinfo, .gamecomments {
+	float: left;
+}
+
+.gameinfo th {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	text-align: right;
+	width: 115px;
+}
+
+.gameinfo td {
+	padding: 1px 3px;
+	width: 150px;
+}
+
+.dumpinfo th {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	text-align: right;
+	width: 100px;
+}
+
+.dumpinfo td {
+	padding: 1px 3px;
+	width: 200px;
+}
+
+.gamecomments th {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	text-align: left;
+}
+
+.gamecomments td {
+	width: 300px;
+}
+
+#owners a {
+	display: block;
+}
+
+.tracks {
+	background-color: #f9fafa;
+	font-family: "Lucida Console", monospace;
+	text-align: right;
+	width: 100%;
+}
+
+.tracks th {
+	background-color: #f9fafa;
+	font-weight: bold;
+}
+	
+.tracks td {
+	padding: 1px 2px;
+	line-height: 1;
+	font-size: 11px;
+}
+
+.tracks tr:hover {
+	background-color: #f1f1f1;
+}
+
+.sectors {
+	background-color: #f9fafa;
+	border: 1px solid #e5e5e5;
+	font-family: "Lucida Console", monospace;
+	margin-bottom: 5px;
+	text-align: left;
+	margin-left: 1em;
+}
+
+.sectors th {
+	background-color: #f9fafa;
+	background-color: #f1f1f1;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-align: center;
+}
+	
+.sectors td {
+	padding: 1px 6px;
+	line-height: 1;
+	font-size: 11px;
+}
+
+.sectors tr:hover {
+	background-color: #f1f1f1;
+}
+
+.dvd {
+	background-color: #f9fafa;
+	border-width: 1px 0px;
+	width: 100%;
+}
+
+.dvd th {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	width: 10em;
+	text-align: right;
+}
+	
+.dvd td {
+	font-family: "Lucida Console", monospace;
+	padding: 2px 3px;
+}
+
+.dvd tr:hover {
+	background-color: #f1f1f1;
+}
+
+/**************/
+/* Statistics */
+/**************/
+
+.statistics {
+	margin: 5px auto;
+	border: 1px solid #e5e5e5;
+	background-color: #f9fafa;
+}
+
+.statistics th {
+	font-weight: bold;
+	text-align: left;
+	background-color: #f1f1f1;
+}
+
+.statistics td, .statistics th {
+	padding: 2px 5px;
+}
+
+.statistics a {
+	display: block;
+}
+
+/***************/
+/* Online list */
+/***************/
+
+#online {
+	background: #ffffff;
+	border: 1px solid #e5e5e5;
+	font: 12px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin: 0 15px 0.6em;
+	padding: 0.2em 0.4em;
+}
+
+a.usera:link, a.usera:visited {
+	color: #ff9966;
+	font-weight: bold;
+}
+
+a.userm:link, a.userm:visited {
+	color: #1111dd;
+
+}
+
+a.userd:link, a.userd:visited {
+	color: #006600;
+}
+
+a.usera:hover, a.userm:hover, a.userd:hover {
+	color: #f26522;
+}

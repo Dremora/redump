@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<ShortName>Redump</ShortName>
+	<Description>Redump Discs Search</Description>
+	<Image height="16" width="16" type="image/png">http://redump.org/favicon.png</Image>
+	<Url type="text/html" method="post" template="http://redump.org/results/">
+  	<Param name="quicksearch" value="{searchTerms}" />
+  </Url>
+</OpenSearchDescription>

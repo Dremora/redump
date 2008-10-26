@@ -1,0 +1,103 @@
+/*
+  AJAX Forms by Dremora
+  CSS File
+*/
+
+/* Form */
+
+.form fieldset {
+	margin: 5px 10px;
+	padding: 5px 0px;
+	border: 1px solid #e5e5e5;
+	background-color: #fefefe;
+	-moz-border-radius: 5px;
+}
+
+.form legend {
+	padding: 0 5px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.form table {
+	width: 100%;
+}
+
+.form th {
+	text-align: right;
+	padding: 2px 20px 7px 0;
+	width: 30%;
+}
+
+.form td {
+	padding-bottom: 5px;
+}
+
+td.static {
+	padding: 2px 0 2px 5px;
+}
+
+.labelright {
+	padding-left: 4px;
+	cursor: pointer;
+}
+
+.input, .input-error, .input-ok {
+	width: 350px;
+	border-width: 1px;
+	border-style: solid;
+	padding: 0px 2px;
+	border-color: #ebebe6;
+	-moz-border-radius: 3px;
+}
+
+.check {
+	margin-bottom: 6px;
+	vertical-align: middle;
+}
+
+.input:hover {
+	border-color: #afafaf;
+}
+
+.input:focus {
+	border-color: #313031;
+}
+
+.th-error {
+	color: #ff0000;
+}
+
+#submit {
+	float: left;
+	height: 20px;
+}
+
+#status {
+	float: left;
+	padding-top: 3px;
+	font-weight: bold;
+}
+
+.status-error {
+	color: #ff0000;
+}
+
+.status-ok {
+	color: #00aa00;
+}
+
+.status-notice {
+	color: #999999;
+}
+
+#status-icon {
+	float: left;
+	margin: 0px 10px;
+	width: 20px;
+	height: 20px;
+}
+
+.status-icon-loading {
+	background-image: url('/styles/default/loading.gif');
+}
