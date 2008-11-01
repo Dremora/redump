@@ -12,7 +12,7 @@ function __autoload($class_name) {
 function sql_connect() {
 	global $psxdb_config, $mysqli;
 	$mysqli = new mysqli($psxdb_config['db_host'], $psxdb_config['db_username'], $psxdb_config['db_password'], $psxdb_config['db_name']);
-	if (mysqli_connect_errno()) {
+	if ($mysqli->connect_errno()) {
 		error("Can't connect to MySQL DB! This problem will be fixed soon, stay tuned!");
 	}
 	$mysqli->query("SET NAMES 'utf8'");

@@ -1,4 +1,13 @@
 <?php
+set_magic_quotes_runtime(0);
+if (get_magic_quotes_gpc()) {
+	function stripslashes_array($array) {
+		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
+	}
+	$_GET = stripslashes_array($_GET);
+	$_POST = stripslashes_array($_POST);
+	$_COOKIE = stripslashes_array($_COOKIE);
+}
 ob_start();
 $psxdb = $psxdb_user = array();
 require_once 'regions.php';
