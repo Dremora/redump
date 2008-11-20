@@ -12,87 +12,180 @@ function __autoload($class_name) {
 function sql_connect() {
 	global $psxdb_config, $mysqli;
 	$mysqli = new mysqli($psxdb_config['db_host'], $psxdb_config['db_username'], $psxdb_config['db_password'], $psxdb_config['db_name']);
-	if ($mysqli->connect_errno()) {
+	if ($mysqli->connect_errno) {
 		error("Can't connect to MySQL DB! This problem will be fixed soon, stay tuned!");
 	}
 	$mysqli->query("SET NAMES 'utf8'");
 }
 
-function check_cookie() {
-	global $mysqli, $psxdb_config, $psxdb_user;
-	$now = time();
-	// We assume it's a guest
-	$cookie = array('user_id' => 1, 'password_hash' => 'Guest');
-	// If a cookie is set, we get the user_id and password hash from it
-	if (isset($_COOKIE[$psxdb_config['cookie_name']])) {
-		list($cookie['user_id'], $cookie['password_hash']) = @unserialize($_COOKIE[$psxdb_config['cookie_name']]);
+function authenticate_user($user, $password, $password_is_hash = false) {
+	global $mysqli, $psxdb_user;
+
+	// Check if there's a user matching $user and $password
+	$query = 'SELECT u.*, g.*, o.logged, o.idle, o.csrf_token, o.prev_url FROM users AS u INNER JOIN groups AS g ON g.g_id=u.group_id LEFT JOIN online AS o ON o.user_id=u.id WHERE ';
+
+	// Are we looking for a user ID or a username?
+	$query .= is_int($user) ? 'u.id='.intval($user) : 'u.username=\''.$mysqli->real_escape_string($user).'\'';
+
+	$result = $mysqli->query($query);
+	$psxdb_user = $result->fetch_assoc();
+
+	if (!isset($psxdb_user['id']) ||
+		($password_is_hash && $password != $psxdb_user['password']) ||
+		(!$password_is_hash && forum_hash($password, $psxdb_user['salt']) != $psxdb_user['password']))
+		set_default_user();
+}
+
+function forum_hash($str, $salt) {
+	return sha1($salt.sha1($str));
+}
+
+function forum_setcookie($name, $value, $expire) {
+	// Enable sending of a P3P header
+	header('P3P: CP="CUR ADM"');
+
+	if (version_compare(PHP_VERSION, '5.2.0', '>='))
+		setcookie($name, $value, $expire, '/', '.'.$_SERVER['HTTP_HOST'], false, true);
+	else
+		setcookie($name, $value, $expire, '/'.'; HttpOnly', '.'.$_SERVER['HTTP_HOST'], false);
+}
+
+function random_key($len, $readable = false, $hash = false) {
+	$key = '';
+
+	if ($hash)
+		$key = substr(sha1(uniqid(rand(), true)), 0, $len);
+	else if ($readable)
+	{
+		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+		for ($i = 0; $i < $len; ++$i)
+			$key .= substr($chars, (mt_rand() % strlen($chars)), 1);
 	}
-	if ($cookie['user_id'] > 1) {
-		// Check if there's a user with the user ID and password hash from the cookie
-		$result = $mysqli->query('SELECT u.*, o.logged, o.idle FROM users u LEFT JOIN online o ON o.user_id=u.id WHERE u.id='.intval($cookie['user_id'])) or error('Unable to fetch user information.');
-		$psxdb_user = $result->fetch_array();
-		// If user authorisation failed
-		if (!isset($psxdb_user['id']) || md5($psxdb_config['cookie_seed'].$psxdb_user['password']) !== $cookie['password_hash']) {
+	else
+		for ($i = 0; $i < $len; ++$i)
+			$key .= chr(mt_rand(33, 126));
+
+	return $key;
+}
+
+function cookie_login() {
+	global $psxdb_config, $psxdb_user, $mysqli;
+
+	$now = time();
+	$expire = $now + 1209600;	// The cookie expires after 14 days
+
+	// We assume it's a guest
+	$cookie = array('user_id' => 1, 'password_hash' => 'Guest', 'expiration_time' => 0, 'expire_hash' => 'Guest');
+
+	// If a cookie is set, we get the user_id and password hash from it
+	if (!empty($_COOKIE[$psxdb_config['cookie_name']])) {
+		$cookie_data = explode('|', base64_decode($_COOKIE[$psxdb_config['cookie_name']]));
+
+		if (!empty($cookie_data) && count($cookie_data) == 4)
+			list($cookie['user_id'], $cookie['password_hash'], $cookie['expiration_time'], $cookie['expire_hash']) = $cookie_data;
+	}
+
+	// If this a cookie for a logged in user and it shouldn't have already expired
+	if (intval($cookie['user_id']) > 1 && intval($cookie['expiration_time']) > $now) {
+		authenticate_user(intval($cookie['user_id']), $cookie['password_hash'], true);
+
+		// We now validate the cookie hash
+		if ($cookie['expire_hash'] !== sha1($psxdb_user['salt'].$psxdb_user['password'].forum_hash(intval($cookie['expiration_time']), $psxdb_user['salt'])))
 			set_default_user();
+
+		// If we got back the default user, the login failed
+		if ($psxdb_user['id'] == '1') {
+			forum_setcookie($psxdb_config['cookie_name'], base64_encode('1|'.random_key(8, false, true).'|'.$expire.'|'.random_key(8, false, true)), $expire);
 			return;
 		}
+
+		// Send a new, updated cookie with a new expiration timestamp
+		$expire = (intval($cookie['expiration_time']) > $now + $psxdb_config['timeout_visit']) ? $now + 1209600 : $now + $psxdb_config['timeout_visit'];
+		forum_setcookie($psxdb_config['cookie_name'], base64_encode($psxdb_user['id'].'|'.$psxdb_user['password'].'|'.$expire.'|'.sha1($psxdb_user['salt'].$psxdb_user['password'].forum_hash($expire, $psxdb_user['salt']))), $expire);
+
 		// Update the online list
-		$mysqli->query('REPLACE INTO online (user_id, ident, logged) VALUES ('.$psxdb_user['id'].', "'.$mysqli->real_escape_string($psxdb_user['username']).'", '.$now.')') or error('Unable to insert into online list.');
-		if ($psxdb_user['logged'] && ($psxdb_user['logged'] < ($now-$psxdb_config['timeout_visit']))) {
-			$mysqli->query('UPDATE users SET last_visit='.$psxdb_user['logged'].' WHERE id='.$psxdb_user['id']) or error('Unable to update user visit data.');
+		if (!$psxdb_user['logged']) {
+			$psxdb_user['logged'] = $now;
+			$psxdb_user['csrf_token'] = random_key(40, false, true);
+			$mysqli->query('REPLACE INTO online (user_id, ident, logged, csrf_token) VALUES ('.$psxdb_user['id'].', \''.$mysqli->real_escape_string($psxdb_user['username']).'\', '.$psxdb_user['logged'].', \''.$psxdb_user['csrf_token'].'\')');
+		} else {
+			// Special case: We've timed out, but no other user has browsed the forums since we timed out
+			if ($psxdb_user['logged'] < ($now-$psxdb_config['timeout_visit'])) {
+				$mysqli->query('UPDATE users SET last_visit='.$psxdb_user['logged'].' WHERE id='.$psxdb_user['id']);
+				$psxdb_user['last_visit'] = $psxdb_user['logged'];
+			}
+
+			if ($psxdb_user['idle'] == '1')
+				$query['SET'] .= ', idle=0';
+
+			$mysqli->query('UPDATE online SET logged='.$now.$query['SET'].' WHERE user_id='.$psxdb_user['id']);
 		}
+
 		define('LOGGED', true);
 		switch ($psxdb_user['group_id']) {
 			case 1:
 				define('ADMIN', true);
 				break;
-			case 2:
-				define('MODERATOR', true);
+			case 3:
+				define('USER', true);
 				break;
 			case 4:
-				define('USER', true);
+				define('MODERATOR', true);
 				break;
 			case 5:
 				define('DUMPER', true);
 				break;
 		}
-	} else {
+	}
+	else {
 		set_default_user();
 	}
 }
 
 function set_default_user() {
-	global $mysqli, $psxdb_user;
+	global $mysqli, $psxdb_user, $psxdb_config;
 	define('GUEST', true);
-	setcookie($psxdb_config['cookie_name'], '', time(), '/', '.'.$_SERVER['HTTP_HOST'], false, true);
-	$result = $mysqli->query('SELECT * FROM users u WHERE u.id=1') or error('Unable to fetch guest information.');
+	// Fetch guest user
+	$result = $mysqli->query('SELECT u.*, g.*, o.logged, o.csrf_token, o.prev_url, o.last_post, o.last_search FROM users AS u INNER JOIN groups AS g ON g.g_id=u.group_id LEFT JOIN online AS o ON o.ident=\''.$mysqli->real_escape_string($_SERVER['REMOTE_ADDR']).'\' WHERE u.id=1');
 	if (!$result->num_rows) {
-		error('Unable to fetch guest information!');
+		exit('Unable to fetch guest information. The table \'users\' must contain an entry with id = 1 that represents anonymous users.');
 	}
 	$psxdb_user = $result->fetch_assoc();
-	if (isset($_GET['module']) && $_GET['module'] == 'feeds' && isset($_GET['feed']) && $_GET['feed'] != '' && !defined('LOGGED')) {
-		$mysqli->query('REPLACE INTO online_feedreaders (ident, logged) VALUES("'.$mysqli->real_escape_string($_SERVER['REMOTE_ADDR']).'", '.time().')') or error('Unable to insert into online feed readers list.');
+	// Update online list
+	if (!$psxdb_user['logged']) {
+		$psxdb_user['logged'] = time();
+		$psxdb_user['csrf_token'] = random_key(40, false, true);
+		if (isset($_GET['module']) && $_GET['module'] == 'feeds' && isset($_GET['feed']) && $_GET['feed'] != '') {
+			$mysqli->query('REPLACE INTO online_feedreaders (ident, logged) VALUES("'.$mysqli->real_escape_string($_SERVER['REMOTE_ADDR']).'", '.time().')') or error('Unable to insert into online feed readers list.');
+		} else {
+			$mysqli->query('REPLACE INTO online (user_id, ident, logged, csrf_token) VALUES (1, \''.$mysqli->real_escape_string($_SERVER['REMOTE_ADDR']).'\', '.$psxdb_user['logged'].', \''.$psxdb_user['csrf_token'].'\')');
+		}
 	} else {
-		$mysqli->query('REPLACE INTO online (user_id, ident, logged) VALUES(1, "'.$mysqli->real_escape_string($_SERVER['REMOTE_ADDR']).'", '.time().')') or error('Unable to insert into online list.');
+		if (isset($_GET['module']) && $_GET['module'] == 'feeds' && isset($_GET['feed']) && $_GET['feed'] != '') {
+			$mysqli->query('UPDATE online_feedreaders SET logged='.time().' WHERE ident=\''.$mysqli->real_escape_string($_SERVER['REMOTE_ADDR']).'\'');
+		} else {
+			$mysqli->query('UPDATE online SET logged='.time().' WHERE ident=\''.$mysqli->real_escape_string($_SERVER['REMOTE_ADDR']).'\'');
+		}
 	}
+	$psxdb_user['timezone'] = $psxdb_config['timezone'];
 }
 
 function update_users_online() {
 	global $mysqli, $psxdb_config;
 	$now = time();
-	// Fetch all online list entries that are older than "timeout_online"
-	$result = $mysqli->query('SELECT * FROM online WHERE logged<'.($now-$psxdb_config['timeout_online'])) or error('Unable to fetch old entries from online list.');
+	$result = $mysqli->query('SELECT o.* FROM online AS o WHERE o.logged<'.($now-$psxdb_config['timeout_online']));
 	while ($cur_user = $result->fetch_assoc()) {
 		// If the entry is a guest, delete it
 		if ($cur_user['user_id'] == '1') {
-			$mysqli->query('DELETE FROM online WHERE ident="'.$mysqli->real_escape_string($cur_user['ident']).'"') or error('Unable to delete from online list.');
+			$mysqli->query('DELETE FROM online WHERE ident=\''.$mysqli->real_escape_string($cur_user['ident']).'\'');
 		} else {
 			// If the entry is older than "timeout_visit", update last_visit for the user in question, then delete him/her from the online list
 			if ($cur_user['logged'] < ($now-$psxdb_config['timeout_visit'])) {
-				$mysqli->query('UPDATE users SET last_visit='.$cur_user['logged'].' WHERE id='.$cur_user['user_id']) or error('Unable to update user visit data.');
-				$mysqli->query('DELETE FROM online WHERE user_id='.$cur_user['user_id']) or error('Unable to delete from online list.');
+				$mysqli->query('UPDATE users SET last_visit='.$cur_user['logged'].' WHERE id='.$cur_user['user_id']);
+				$mysqli->query('DELETE FROM online WHERE user_id='.$cur_user['user_id']);
 			} else if ($cur_user['idle'] == '0') {
-				$mysqli->query('UPDATE online SET idle=1 WHERE user_id='.$cur_user['user_id']) or error('Unable to insert into online list.');
+				$mysqli->query('UPDATE online SET idle=1 WHERE user_id='.$cur_user['user_id']);
 			}
 		}
 	}
@@ -112,14 +205,8 @@ function show_users_online() {
 	$result = $mysqli->query('SELECT user_id, id, ident, group_id FROM online,users WHERE idle=0 AND user_id=users.id ORDER BY ident') or error('Unable to fetch online list.');
 
 	while ($user_online = $result->fetch_assoc()) {
-		switch ($user_online['group_id']) {
-			case 1: $usercolor = ' class="usera"'; break;
-			case 2: $usercolor = ' class="userm"'; break;
-			case 5: $usercolor = ' class="userd"'; break;
-			default: $usercolor = '';
-		}
 		if ($user_online['user_id'] > 1)
-			$users[] = '<a href="http://forum.'.$_SERVER['HTTP_HOST'].'/profile.php?id='.$user_online['user_id'].'"'.$usercolor.'>'.htmlspecialchars($user_online['ident']).'</a>';
+			$users[] = '<a href="http://forum.'.$_SERVER['HTTP_HOST'].'/profile.php?id='.$user_online['user_id'].'">'.htmlspecialchars($user_online['ident']).'</a>';
 		else {
 			$num_guests++;
 		}

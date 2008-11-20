@@ -5,14 +5,7 @@ if (!defined('PSXDB')) {
 	die();
 }
 
-echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt="" />';
-//if (!defined('LOGGED'))
-//	echo 'Welcome, guest! Please <b><a href="http://forum.'.$_SERVER['HTTP_HOST'].'/login.php">log in</a></b> or <b><a href="http://forum.'.$_SERVER['HTTP_HOST'].'/register.php">register</a></b>!';
-//else
-//	echo 'Logged as '.htmlspecialchars($psxdb_user['username']).' &bull; <a href="http://forum.'.$_SERVER['HTTP_HOST'].'/profile.php?id='.$psxdb_user['id'].'">My profile</a> &bull; My discs &bull; <a href="http://forum.'.$_SERVER['HTTP_HOST'].'/login.php?action=out&amp;id='.$psxdb_user['id'].'">Log out</a>';
-	
-echo '</div>
-
+echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt="" /></div>
 <form action="/results/" method="post"><div class="menu"><input id="quicksearch" type="text" name="quicksearch" value="Quick search" /><a href="/">Main</a><a href="/discs/" id="menu1" onmouseout="hideelement(\'1\');" onmouseover="showelement(\'1\');">Discs</a><a id="menu2" onmouseout="hideelement(\'2\');" onmouseover="showelement(\'2\');">Downloads</a><a id="menu3" onmouseout="hideelement(\'3\');" onmouseover="showelement(\'3\');">Site</a>'.(defined('LOGGED') ? '<a id="menu5" onmouseout="hideelement(\'5\');" onmouseover="showelement(\'5\');">User</a>' : '').'<a href="/guide/">Guide</a><a id="menu4" onmouseout="hideelement(\'4\');" onmouseover="showelement(\'4\');">Affiliates</a><a href="http://forum.'.$_SERVER['HTTP_HOST'].'/">Forum</a><a id="rss" href="/feeds/"><img src="/images/feed.png" alt="Feeds" title="Feeds" /></a></div></form>';
 ?>
 <div class="submenu" id="submenu1" onmouseout="hideelement('1');" onmouseover="showelement('1');">
@@ -71,12 +64,8 @@ echo '</div>
 <b><a href="http://forum.<?php echo $_SERVER['HTTP_HOST']; ?>/register.php">Register</a></b>
 <a href="http://forum.<?php echo $_SERVER['HTTP_HOST']; ?>/login.php">Log in</a>
 <?php endif; ?>
-<a href="/about/">About</a>
 <a href="http://forum.<?php echo $_SERVER['HTTP_HOST']; ?>/userlist.php">Users</a>
-<a href="http://validator.w3.org/check?uri=referer"><img src="/images/button-xhtml11.png" alt="Valid XHTML 1.1" title="Valid XHTML 1.1" /></a>
-<a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="/images/button-css.png" alt="Valid CSS" title="Valid CSS" /></a>
-<a href="irc://irc.foreverchat.net/redump">#redump</a>
-<a href="irc://irc.newnet.net/emu-russia">#emu-russia</a>
+<a href="irc://irc.foreverchat.net/redump">IRC: #redump</a>
 <a href="mailto:redump.team@gmail.com">E-mail</a>
 <?php if (defined('ADMIN') || defined('MODERATOR')) : ?>
 <a href="http://tracker.redump.org/">Tracker</a>
@@ -84,7 +73,7 @@ echo '</div>
 </div>
 
 <div class="submenu" id="submenu4" onmouseout="hideelement('4');" onmouseover="showelement('4');">
-<a href="http://www.no-intro.org/">No-Intro</a><?
+<a href="http://www.no-intro.org/">No-Intro</a><?php
 //<a href="http://psxdata.snesorama.us/">PlayStation DataCenter</a>
 ?>
 <a href="http://www.defconsoft.co.uk/">PAL PlayStation Collective</a>

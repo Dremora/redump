@@ -5,13 +5,12 @@ $psxdb_config = array(
 	'db_name'                    => '',
 	'db_username'                => '',
 	'db_password'                => '',
-	'cookie_name'                => 'psxdb_cookie',
-	'cookie_seed'                => '',
+	'cookie_name'                => 'redump_cookie',
 	'timeout_visit'              => 600,
 	'timeout_online'             => 300,
 	'timeout_online_feedreaders' => 3600,
-	'timezone'                   => +2,
-	'red_users'                  => /*  here goes the array of users' IDs which have access to the red discs */
+	'timezone'                   => 0,
+	'red_users'                  => array()/*  here goes the array of users' IDs which have access to the red discs */
 );
 
 define('PSXDB', true);
