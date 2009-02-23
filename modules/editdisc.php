@@ -175,7 +175,7 @@ if (isset($_GET['action'])) {
 		foreach ($_POST['d_dumpers'] as $dumper) {
 			if (!preg_match('@^[1-9][0-9]{0,4}$@', $dumper))
 				errorXML('Please check dumpers\' IDs!');
-			$query = $mysqli->query('SELECT `u`.`group_id`,`u`.`id`,`u`.`username` FROM `users` AS `u` WHERE (`u`.`group_id`=1 OR `u`.`group_id`=2 OR `u`.`group_id`=5) AND `u`.`id`='.$dumper);
+			$query = $mysqli->query('SELECT `u`.`group_id`,`u`.`id`,`u`.`username` FROM `users` AS `u` WHERE (`u`.`group_id`=1 OR `u`.`group_id`=4 OR `u`.`group_id`=5) AND `u`.`id`='.$dumper);
 			if (!$dumper = $query->fetch_array())
 				errorXML('Dumper with ID="'.$dumper.'" doesn\'t exist!');
 			$dumpers_names[] = $dumper['username'];
@@ -247,7 +247,7 @@ if (isset($_GET['action'])) {
 	} else if ($disc['s_media'] == 2) {
 		// Size
 		$_POST['d_size']    = trim($_POST['d_size']);
-		if (!preg_match('@^[0-9]{7,10}$@', $_POST['d_size']))
+		if (!preg_match('@^[0-9]{7,11}$@', $_POST['d_size']))
 			errorXML('Please check disc size!');
 		// CRC-32
 		$_POST['d_crc32']   = strtolower(trim($_POST['d_crc32']));
@@ -448,7 +448,7 @@ if (isset($_GET['action'])) {
 					$rss->changes('MD5', $oldtrack['t_md5'], $tracks[$number]['md5']);
 					$rss->changes('SHA-1', $oldtrack['t_sha1'], $tracks[$number]['sha1']);
 					$rss->changes('Track type', tracktype($oldtrack['t_type']), tracktype($tracks[$number]['type']));
-					$rss->changes('Flags', flags($oldtrack['flags']), flags($tracks[$number]['flags']));
+					$rss->changes('Flags', flags($oldtrack['t_flags']), flags($tracks[$number]['flags']));
 					if (($oldtrack['t_pregap'] || $tracks[$number]['pregap']))
 						$rss->changes('Pregap', stomsf($oldtrack['t_pregap']), stomsf($tracks[$number]['pregap']));
 				}
@@ -470,6 +470,7 @@ if (isset($_GET['action'])) {
 					$rss->changes('MD5', '', $tracks[$number]['md5']);
 					$rss->changes('SHA-1', '', $tracks[$number]['sha1']);
 					$rss->changes('Track type', '', tracktype($tracks[$number]['type']));
+					$rss->changes('Flags', '', flags($tracks[$number]['flags']));
 					if ($tracks[$number]['pregap']) {
 						$rss->changes('Pregap', '', stomsf($tracks[$number]['pregap']));
 					}
@@ -489,6 +490,7 @@ if (isset($_GET['action'])) {
 					$rss->changes('MD5', $oldtrack['t_md5'], '');
 					$rss->changes('SHA-1', $oldtrack['t_sha1'], '');
 					$rss->changes('Track type', tracktype($oldtrack['t_type']), '');
+					$rss->changes('Flags', flags($oldtrack['t_flags']), '');
 					if ($oldtrack['t_pregap']) {
 						$rss->changes('Pregap', stomsf($oldtrack['t_pregap']), '');
 					}
@@ -608,7 +610,7 @@ if ($system['s_id'] == 1) {
 // d) dumpers
 if (defined('ADMIN') || defined('MODERATOR')) {
 	$form->fieldset('Dumpers and status');
-	$query = $mysqli->query('SELECT `u`.`group_id`,`u`.`id`,`u`.`username` FROM `users` AS `u` WHERE `u`.`group_id`=1 OR `u`.`group_id`=2 OR `u`.`group_id`=5 ORDER BY `u`.`username`');
+	$query = $mysqli->query('SELECT `u`.`group_id`,`u`.`id`,`u`.`username` FROM `users` AS `u` WHERE `u`.`group_id`=1 OR `u`.`group_id`=4 OR `u`.`group_id`=5 ORDER BY `u`.`username`');
 	while ($dumper = $query->fetch_array())
 		$dumpers[] = array($dumper['username'], $dumper['id']);
 	$query = $mysqli->query('SELECT * FROM `du` WHERE (`du`.`du_status`=1 OR `du`.`du_status`=2) AND `du`.`d_id`='.$disc['d_id']);

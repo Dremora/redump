@@ -190,7 +190,7 @@ if (isset($_GET['action'])) {
 			foreach ($_POST['d_dumpers'] as $dumper) {
 				if (!preg_match('@^[1-9][0-9]{0,4}$@', $dumper))
 					errorXML('Please check dumpers\' IDs!');
-				$query = $mysqli->query('SELECT `u`.`group_id`,`u`.`id`,`u`.`username` FROM `users` AS `u` WHERE (`u`.`group_id`=1 OR `u`.`group_id`=2 OR `u`.`group_id`=5) AND `u`.`id`='.$dumper);
+				$query = $mysqli->query('SELECT `u`.`group_id`,`u`.`id`,`u`.`username` FROM `users` AS `u` WHERE (`u`.`group_id`=1 OR `u`.`group_id`=4 OR `u`.`group_id`=5) AND `u`.`id`='.$dumper);
 				if (!$dumper = $query->fetch_array())
 					errorXML('Dumper with ID="'.$dumper.'" doesn\'t exist!');
 				$dumpers_names[] = $dumper['username'];
@@ -264,7 +264,7 @@ if (isset($_GET['action'])) {
 	} else if ($system['s_media'] == 2) {
 		// Size
 		$_POST['d_size']    = trim($_POST['d_size']);
-		if (!preg_match('@^[0-9]{7,10}$@', $_POST['d_size']))
+		if (!preg_match('@^[0-9]{7,11}$@', $_POST['d_size']))
 			errorXML('Please check disc size!');
 		// CRC-32
 		$_POST['d_crc32']   = strtolower(trim($_POST['d_crc32']));
@@ -416,7 +416,7 @@ if (isset($_GET['action'])) {
 			$rss->row('CRC-32', $_POST['d_crc32']);
 			$rss->row('MD5', $_POST['d_md5']);
 			$rss->row('SHA-1', $_POST['d_sha1']);
-			$rss->row('DOL MD5', $_POST['d_dol_sha1']);
+			$rss->row('DOL MD5', $_POST['d_dol_md5']);
 		}
 		
 		// 6. Tracks/DVD data
@@ -667,7 +667,7 @@ if (defined('ADMIN') || defined('MODERATOR')) {
 		$form->statictext(array('caption' => 'Dumper', 'contents' => '<a href="/discs/dumper/'.htmlspecialchars($user['username']).'/">'.htmlspecialchars($user['username']).'</a>'));
 		$form->hidden(array('name' => 'd_dumper', 'value' => $disc['d_dumper']));
 	} else {
-		$query = $mysqli->query('SELECT `u`.`group_id`,`u`.`id`,`u`.`username` FROM `users` AS `u` WHERE `u`.`group_id`=1 OR `u`.`group_id`=2 OR `u`.`group_id`=5 ORDER BY `u`.`username`');
+		$query = $mysqli->query('SELECT `u`.`group_id`,`u`.`id`,`u`.`username` FROM `users` AS `u` WHERE `u`.`group_id`=1 OR `u`.`group_id`=4 OR `u`.`group_id`=5 ORDER BY `u`.`username`');
 		while ($dumper = $query->fetch_array())
 			$dumpers[] = array($dumper['username'], $dumper['id']);
 		$form->radio(array('name' => 'd_status', 'caption' => 'Status', 'radio' => array(array(status(4).' '.statustext(4), 4), array(status(5).' '.statustext(5), 5))));

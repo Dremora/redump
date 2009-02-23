@@ -5,12 +5,14 @@ $psxdb['regions'] = array(
 	'Au' => 'Australia',
 	'B'  => 'Brazil',
 	'C'  => 'China',
+	'Cz' => 'Czech',
 	'E'  => 'Europe',
 	'F'  => 'France',
 	'G'  => 'Germany',
 	'I'  => 'Italy',
 	'J'  => 'Japan',
 	'K'  => 'Korea',
+	'P'  => 'Poland',
 	'R'  => 'Russia',
 	'S'  => 'Spain',
 	'Sw'  => 'Sweden',
@@ -27,13 +29,16 @@ $psxdb['categories'] = array(
 	5 => 'Multimedia',
 	6 => 'Applications',
 	7 => 'Coverdiscs',
-	8 => 'Educational'
+	8 => 'Educational',
+	9 => 'Bonus Discs',
+	10 => 'Betas'
 );
 
-$psxdb['languages'] = array('chi', 'cze', 'dan', 'dut', 'eng', 'fin', 'fre', 'ger', 'gre', 'hun', 'ita', 'jap', 'kor', 'nor', 'pol', 'por', 'rus', 'spa', 'swe');
+$psxdb['languages'] = array('chi', 'hrv', 'cze', 'dan', 'dut', 'eng', 'fin', 'fre', 'ger', 'gre', 'hun', 'ita', 'jap', 'kor', 'nor', 'pol', 'por', 'rus', 'spa', 'swe');
 
 $psxdb['languages_names'] = array(
 	'chi' => 'Chinese',
+	'hrv' => 'Croatian',
 	'cze' => 'Czech',
 	'dan' => 'Danish',
 	'dut' => 'Dutch',
@@ -71,7 +76,10 @@ $psxdb['languages_no-intro'] = array(
 	'gre' => 'El',
 	'pol' => 'Pl',
 	'rus' => 'Ru',
-	'chi' => 'Ch'
+	'chi' => 'Ch',
+	'hrv' => 'Hr',
+	'hun' => 'Hu',
+	'cze' => 'Cs'
 );
 
 ?>

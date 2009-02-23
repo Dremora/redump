@@ -48,10 +48,10 @@ switch ($_GET['console']) {
 		$query_count = 'SELECT COUNT(`d`.`d_id`),GREATEST(MAX(`d`.`d_datetime_updated`),UNIX_TIMESTAMP("2007-07-25 19:31:00")) AS `updated` FROM `discs` AS `d` WHERE `d`.`d_status`<>1 AND `d`.`d_status`<>2 AND '.$systems_query;
 		switch ($media) {
 			case 1:
-				$query = 'SELECT * FROM `discs` AS `d`,`tracks` AS `t`,`systems` AS `s` WHERE `d`.`d_status`<>1 AND `d`.`d_status`<>2 AND `s`.`s_id`=`d`.`d_media` AND `d`.`d_id`=t.`d_id` AND '.$systems_query.' ORDER BY `d`.`d_title`,`d`.`d_region`,`d`.`d_version`,`d`.`d_version_datfile`,`d`.`d_languages`,`d`.`d_number`,`t`.`t_number`';
+				$query = 'SELECT * FROM `discs` AS `d`,`tracks` AS `t`,`systems` AS `s` WHERE `d`.`d_status`<>1 AND `d`.`d_status`<>2 AND `s`.`s_id`=`d`.`d_media` AND `d`.`d_id`=t.`d_id` AND '.$systems_query.' ORDER BY `d`.`d_title`,`d`.`d_region`,`d`.`d_version`,`d`.`d_version_datfile`,`d`.`d_languages`,`d`.`d_number`,`d`.`d_serial`,`t`.`t_number`';
 				break;
 			case 2:
-				$query = 'SELECT `d`.*,`s`.*,`dvd`.`d_size` AS `t_size`,`dvd`.`d_crc32` AS `t_crc32`,`dvd`.`d_md5` AS `t_md5`,`dvd`.`d_sha1` AS `t_sha1` FROM `discs` AS `d`,`dvd`,`systems` AS `s` WHERE `d`.`d_status`<>1 AND `d`.`d_status`<>2 AND `s`.`s_id`=`d`.`d_media` AND `d`.`d_id`=`dvd`.`d_id` AND '.$systems_query.' ORDER BY `d`.`d_title`,`d`.`d_region`,`d`.`d_version`,`d`.`d_number`';
+				$query = 'SELECT `d`.*,`s`.*,`dvd`.`d_size` AS `t_size`,`dvd`.`d_crc32` AS `t_crc32`,`dvd`.`d_md5` AS `t_md5`,`dvd`.`d_sha1` AS `t_sha1` FROM `discs` AS `d`,`dvd`,`systems` AS `s` WHERE `d`.`d_status`<>1 AND `d`.`d_status`<>2 AND `s`.`s_id`=`d`.`d_media` AND `d`.`d_id`=`dvd`.`d_id` AND '.$systems_query.' ORDER BY `d`.`d_title`,`d`.`d_region`,`d`.`d_version`,`d`.`d_number`,`d`.`d_serial`';
 				break;
 			case 3:
 				$query = 'SELECT `d`.*,`s`.*,1 AS `t_number`,`dvd`.`d_size` AS `t_size`,`dvd`.`d_crc32` AS `t_crc32`,`dvd`.`d_md5` AS `t_md5`,`dvd`.`d_sha1` AS `t_sha1` FROM `discs` AS `d`,`dvd`,`systems` AS `s` WHERE `d`.`d_status`<>1 AND `d`.`d_status`<>2 AND `s`.`s_id`=`d`.`d_media` AND `d`.`d_id`=`dvd`.`d_id` AND '.$systems_dvd_query.' UNION SELECT `d`.*,`s`.*,`t`.`t_number`,`t`.`t_size`,`t`.`t_crc32`,`t`.`t_md5`,`t`.`t_sha1` FROM `discs` AS `d`,`tracks` AS `t`,`systems` AS `s` WHERE `s`.`s_id`=`d`.`d_media` AND `d`.`d_id`=`t`.`d_id` AND '.$systems_cd_query.' ORDER BY `d_title`,`d_region`,`d_languages`,`d_version`,`d_version_datfile`,`d_number`,`d_serial`,`t_number`';

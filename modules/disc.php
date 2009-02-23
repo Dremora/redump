@@ -329,7 +329,7 @@ if ($tracks->num_rows && $disc['s_media'] == 1) {
 	echo '<tr><th>#</th><th>Type</th><th>Pregap</th><th>Length</th><th>Sectors</th><th>Size</th><th>CRC-32</th><th>MD5</th><th>SHA-1</th></tr>';
 	while ($track = $tracks->fetch_array()) {
 		$totaltracksize += $track['t_size'];
-		if ($track['t_number'] == 1) $track['t_pregap'] += 150;
+		//if ($track['t_number'] == 1) $track['t_pregap'] += 150;
 		$lba = $track['t_size'] / 2352;
 		$min = str_pad(floor($lba / 60 / 75), 2, '0', STR_PAD_LEFT);
 		$sec = str_pad(floor(($lba - ($min * 60 * 75)) / 75), 2, '0', STR_PAD_LEFT);
