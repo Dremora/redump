@@ -32,10 +32,17 @@ switch ($_GET['action']) {
 		if ($disc['s_media'] == 1) {
 			$tracks = $mysqli->query('SELECT * FROM tracks WHERE d_id='.$_GET['id'].' ORDER BY t_number');
 			while ($track = $tracks->fetch_array()) {
-				echo filename($disc, $track['t_number']).'.'.$disc['s_extension'].' '.$track['t_crc32']."\r\n";
+				if ($disc['s_description'] == 2) {
+					echo 'Track'.str_pad($track['t_number'], 2, '0', STR_PAD_LEFT).'.'.$disc['s_extension'].' '.$track['t_crc32']."\r\n";
+				} else {
+					echo filename($disc, $track['t_number']).'.'.$disc['s_extension'].' '.$track['t_crc32']."\r\n";
+				}
 			}
 			if ($disc['s_description'] == 1) {
 				echo discfilename($disc).'.cue'.' '.$disc['d_cue_crc32']."\r\n";
+			}
+			if ($disc['s_description'] == 2) {
+				echo discfilename($disc).'.gdi'.' '.$disc['d_cue_crc32']."\r\n";
 			}
 		} else if ($disc['s_media'] == 2) {
 			$dvdquery = $mysqli->query('SELECT * FROM `dvd` WHERE `dvd`.`d_id`='.intval($_GET['id']));
@@ -49,10 +56,17 @@ switch ($_GET['action']) {
 		if ($disc['s_media'] == 1) {
 			$tracks = $mysqli->query('SELECT * FROM tracks WHERE d_id='.$_GET['id'].' ORDER BY t_number');
 			while ($track = $tracks->fetch_array()) {
-				echo $track['t_md5'].' *'.filename($disc, $track['t_number']).'.'.$disc['s_extension']."\r\n";
+				if ($disc['s_description'] == 2) {
+					echo $track['t_md5'].' *Track'.str_pad($track['t_number'], 2, '0', STR_PAD_LEFT).'.'.$disc['s_extension']."\r\n";
+				} else {
+					echo $track['t_md5'].' *'.filename($disc, $track['t_number']).'.'.$disc['s_extension']."\r\n";
+				}
 			}
 			if ($disc['s_description'] == 1) {
 				echo $disc['d_cue_md5'].' *'.discfilename($disc).'.cue'."\r\n";
+			}
+			if ($disc['s_description'] == 2) {
+				echo $disc['d_cue_md5'].' *'.discfilename($disc).'.gdi'."\r\n";
 			}
 		} else if ($disc['s_media'] == 2) {
 			$dvdquery = $mysqli->query('SELECT * FROM `dvd` WHERE `dvd`.`d_id`='.intval($_GET['id']));
