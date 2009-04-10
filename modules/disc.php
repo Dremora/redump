@@ -343,14 +343,14 @@ if ($tracks->num_rows && $disc['s_media'] == 1) {
 	echo '<tr><th>#</th><th>Type</th><th>Pregap</th><th>Length</th><th>Sectors</th><th>Size</th><th>CRC-32</th><th>MD5</th><th>SHA-1</th></tr>';
 	while ($track = $tracks->fetch_array()) {
 		$totaltracksize += $track['t_size'];
-		//if ($track['t_number'] == 1) $track['t_pregap'] += 150;
 		$lba = $track['t_size'] / 2352;
 		$min = str_pad(floor($lba / 60 / 75), 2, '0', STR_PAD_LEFT);
 		$sec = str_pad(floor(($lba - ($min * 60 * 75)) / 75), 2, '0', STR_PAD_LEFT);
 		$frame = str_pad($lba - ($min * 60 * 75) - ($sec * 75), 2, '0', STR_PAD_LEFT);
-		$gapsec = str_pad(floor($track['t_pregap'] / 75), 2, '0', STR_PAD_LEFT);
-		$gapframe = str_pad($track['t_pregap'] - ($gapsec * 75), 2, '0', STR_PAD_LEFT);		
-		echo '<tr><td>'.$track['t_number'].'</td><td>'.tracktype($track['t_type']).'</td><td>00:'.$gapsec.':'.$gapframe.'</td><td>'.$min.':'.$sec.':'.$frame.'</td><td>'.$lba.'</td><td>'.$track['t_size'].'</td><td>'.$track['t_crc32'].'</td><td>'.$track['t_md5'].'</td><td>'.$track['t_sha1'].'</td></tr>';
+		$gapmin = str_pad(floor($track['t_pregap'] / 60 / 75), 2, '0', STR_PAD_LEFT);
+		$gapsec = str_pad(floor($track['t_pregap'] / 75) % 60, 2, '0', STR_PAD_LEFT);
+		$gapframe = str_pad($track['t_pregap'] % 75, 2, '0', STR_PAD_LEFT);
+		echo '<tr><td>'.$track['t_number'].'</td><td>'.tracktype($track['t_type']).'</td><td>'.$gapmin.':'.$gapsec.':'.$gapframe.'</td><td>'.$min.':'.$sec.':'.$frame.'</td><td>'.$lba.'</td><td>'.$track['t_size'].'</td><td>'.$track['t_crc32'].'</td><td>'.$track['t_md5'].'</td><td>'.$track['t_sha1'].'</td></tr>';
 		if ($tracks->num_rows > 1 && $track['t_number'] == $disc['d_tracks_count']) {
 			$lba = $totaltracksize / 2352;
 			$min = str_pad(floor($lba / 60 / 75), 2, '0', STR_PAD_LEFT);

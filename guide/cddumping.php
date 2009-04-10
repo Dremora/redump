@@ -23,7 +23,7 @@ $contents   = <<<end_delimiter
 	<li><a href="http://www.isobuster.com/">IsoBuster</a></li>
 	<li><a href="http://www.exactaudiocopy.de/eac-0.99pb4.exe">ExactAudioCopy V0.99 Prebeta 4</a></li>
 	<li><a href="/download/resize.rar">Resize</a></li>
-	<li><a href="http://soft.dremora.com/psxt001z-0.21b1.7z">psxt001z</a> (PSX 
+	<li><a href="/download/psxt001z-0.21b1.7z">psxt001z</a> (PSX 
 	only)</li>
 </ul>
 </div>
@@ -35,7 +35,7 @@ $contents   = <<<end_delimiter
 Insert the disc into the drive and launch IsoBuster.</p>
 <br />
 <p>A disc with audio tracks will look as follows (notice how the audio track icon differs from the data track one):<br /><br />
-<img src="http://vigi.dremora.com/dumpingguide/isobuster1.PNG" alt="" style="width: 341px; height: 354px;" /><br />
+<img src="/images/dumpingguide/isobuster1.PNG" alt="" style="width: 341px; height: 354px;" /><br />
 <br />A disc with audio tracks will unfortunately take a bit longer to dump, because audio tracks require a different treatment than data tracks.</p>
 </div>
 
@@ -51,12 +51,12 @@ Insert the disc into the drive and launch IsoBuster.</p>
 <br /><p>The data will now be extracted.<br /><br />If you get 'Unreadable sector' errors at the end of the track (this is common 
 for discs with audio tracks), pick the option 'Replace with User Data All zeroes' for all unreadable sectors.</p><br />
 <p>
-<img src="http://vigi.dremora.com/dumpingguide/isobuster2-error1.PNG" alt="" style="width: 264px; height: 327px;" /></p>
+<img src="/images/dumpingguide/isobuster2-error1.PNG" alt="" style="width: 264px; height: 327px;" /></p>
 <p><br />Errors should only occur at the very end of the track (99%-100% extraction). 
 If the error occurs earlier, make sure that the disc is free of scratches.<br />
 <br />After extraction, if it asks if you want to delete the file, choose 'No'.</p><br />
 <p>
-<img src="http://vigi.dremora.com/dumpingguide/isobuster2-error2.PNG" alt="" style="width: 238px; height: 204px;" /></p>
+<img src="/images/dumpingguide/isobuster2-error2.PNG" alt="" style="width: 238px; height: 204px;" /></p>
 <br /><p>When the extraction is complete, you will have an image file of the data track.</p><br />
 <p>If the disc contains audio tracks, go to the next part called 'Fixing the pregap'.</p><br />
 <p>If the disc only contains a data track, you are ready to check the image for errors. Head on to the step called 'Checking and repairing the data track'.</p>
@@ -114,7 +114,7 @@ to the next step called 'Setting up EAC the first time'.</p>
 	<li>EAC will now detect gaps between the tracks.</li>
 </ul>
 <p><br />
-<img src="http://vigi.dremora.com/dumpingguide/eac-pregap.PNG" alt="" /><br />
+<img src="/images/dumpingguide/eac-pregap.PNG" alt="" /><br />
 &nbsp;</p>
 <p>You can see that in this picture, EAC detected a Track02 pregap of 4 seconds. 
 In most cases the pregap will be 2 seconds.<br />
@@ -132,7 +132,7 @@ To remove the Track02 pregap from Track 01, we will use a tool called 'Resize'<b
 To use this tool, download it and extract it in the same folder as the 'Track 01.bin' file. Resize.com requires you to work in Command Prompt.<p>If 
 EAC reported a pregap of 2 seconds = 352800 bytes and the filename of the image is 'Track 01.bin', the command would be as follows:</p>
 <br /><blockquote><p>RESIZE -r -352800 "Track 01.bin"</p></blockquote><br />
-<p><img src="http://vigi.dremora.com/dumpingguide/resize1.PNG" alt="" style="width: 356px; height: 91px;" /></p>
+<p><img src="/images/dumpingguide/resize1.PNG" alt="" style="width: 356px; height: 91px;" /></p>
 <p><br />When the correct amount of bytes is removed from the end of the image, the data track image is ready for error checking and repairing. Go to the next step called 'Checking and repairing the data track'.</p>
 
 </div>
@@ -145,7 +145,7 @@ We now have an image of the data track that is ready for error checking and repa
 <p>If the data track was ripped from a disc with audio tracks, you will receive a message similar to this 
 (it is also possible that some sectors are fixed, this is normal for discs with 
 audio tracks):</p><br />
-<p><img src="http://vigi.dremora.com/dumpingguide/psxt001z1.PNG" alt="" style="width: 340px; height: 407px;" /></p>
+<p><img src="/images/dumpingguide/psxt001z1.PNG" alt="" style="width: 340px; height: 407px;" /></p>
 <br /><p>If the disc that you are trying to dump has no audio tracks, we are almost ready. You can go to the part 'Final Steps'.</p>
 <br /><p>If the disc contains audio tracks, you can start ripping the audio tracks. So 
 if you are ready, continue to the next part 'Ripping the audio tracks'.</p>
@@ -173,7 +173,7 @@ to the relevant cd sector:</p><br />
 	your screen will look similar to this:</li>
 </ul>
 <p>&nbsp;</p>
-<p><img src="http://vigi.dremora.com/dumpingguide/isobuster-scrambled.PNG" alt="" /></p>
+<p><img src="/images/dumpingguide/isobuster-scrambled.PNG" alt="" /></p>
 <p><br />
 Now you should get a number of rows that show (scrambled) 
 binary data, followed by rows of zeroes. It is also possible that the last 
@@ -228,7 +228,7 @@ amount of data in the sector for EAC and not the factory write offset value!</p>
 	<li>Change to the "Offset / Speed" tab and change the value in the 'Read sample offset correction value' to the new value. A value of 32 samples (amount of data in the sector) earlier means entering '+32' in EAC;</li>
 	<li>The value should always be positive or EAC may cut off data! <b>Therefore tracks should always be dumped on the drives that show data in the previous step!</b></li>
 </ul>
-<br /><p><img src="http://vigi.dremora.com/dumpingguide/eac2-offset.PNG" alt="" style="width: 418px; height: 183px;" /></p>
+<br /><p><img src="/images/dumpingguide/eac2-offset.PNG" alt="" style="width: 418px; height: 183px;" /></p>
 <br /><p>Now we're finally ready to start ripping the audio tracks.</p>
 </div>
 	<h3>Ripping audio tracks with EAC</h3>
