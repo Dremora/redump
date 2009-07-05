@@ -235,11 +235,13 @@ function utf2lat($string) {
 	$array = array (
 		'"' => '',
 		'*' => '-',
-		':' => ' -',
+		': ' => ' - ',
+		':' => '-',
 		'/' => '-',
 		'?' => '',
 		'°' => '',
 		'Ä' => 'A',
+		'å' => 'a',
 		'ä' => 'a',
 		'É' => 'E',
 		'é' => 'e',
@@ -590,40 +592,33 @@ function pregaptype($integer) {
 }
 
 // 7.1 Disc filename
-function discfilename($array, $nointro = 0) {
-	return filename($array, 0, $nointro);
+function discfilename($array, $old = 0) {
+	return filename($array, 0, $old);
 }
 
 // 7.2 Track filename
-function trackfilename($array, $nointro = 0) {
-	return filename($array, $array['t_number'], $nointro);
+function trackfilename($array, $old = 0) {
+	return filename($array, $array['t_number'], $old);
 }
 
 // 7.3 Filename
-function filename($disc, $track, $nointro = 0) {
+function filename($disc, $track, $old = 0) {
 	global $psxdb;
-	if ($nointro) {
-		// Title, region
-		$filename = utf2lat($disc['d_title']).' ('.$psxdb['regions'][$disc['d_region']].')';
-		
-		// Languages
-		$lang_array = explode(',', $disc['d_languages']);
-		if (count($lang_array) > 1) {
-			$lang_array2 = array();
-			foreach ($psxdb['languages_no-intro'] as $k => $v) {
-				if (in_array($k, $lang_array) && !in_array($v, $lang_array2)) {
-					$lang_array2[] = $v;
-				}
+
+	// Title, region
+	$filename = utf2lat($disc['d_title']).' ('.$psxdb['regions'][$disc['d_region']].')';
+	
+	// Languages
+	$lang_array = explode(',', $disc['d_languages']);
+	if (count($lang_array) > 1) {
+		$lang_array2 = array();
+		foreach ($psxdb['languages_no-intro'] as $k => $v) {
+			if (in_array($k, $lang_array) && !in_array($v, $lang_array2)) {
+				$lang_array2[] = $v;
 			}
-			if (count($lang_array2) > 1) {
-				$filename .= ' ('.implode(',', $lang_array2).')';
-			}
-		}		
-	} else {	
-		// Title, region
-		$filename = utf2lat($disc['d_title']);
-		if ($disc['d_region'] != 'W') {
-			$filename .= ' ('.$disc['d_region'].')';
+		}
+		if (count($lang_array2) > 1) {
+			$filename .= ' ('.implode(',', $lang_array2).')';
 		}
 	}
 
@@ -650,14 +645,12 @@ function filename($disc, $track, $nointro = 0) {
 			elseif ($disc['d_tracks_count'] > 9 && $track > 9) $filename .= ' (Track '.$track.')';
 	}
 	
-	if (!$nointro) {
+	if ($old) {
 		// Serial
 		if ($disc['d_serial'] != '' && $disc['s_serial'] != 0)
 			$filename .= ' ['.substr($disc['d_serial'], 0, $disc['s_serial']).']';
-	} else if ($disc['d_category'] == 2) {
-		// Sample
-		$filename .= ' (Sample)';
 	}
+	
 	return $filename;
 }
 

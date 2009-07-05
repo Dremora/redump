@@ -79,8 +79,8 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <div class="submenu" id="submenu4" onmouseout="hideelement('4');" onmouseover="showelement('4');">
 <a href="http://www.no-intro.org/">No-Intro</a><?php
 //<a href="http://psxdata.snesorama.us/">PlayStation DataCenter</a>
+//<a href="http://www.defconsoft.co.uk/">PAL PlayStation Collective</a>
 ?>
-<a href="http://www.defconsoft.co.uk/">PAL PlayStation Collective</a>
 </div>
 
 <?php if (defined('LOGGED')): ?>

@@ -5,10 +5,10 @@ if (!defined('PSXDB')) {
 	die();
 }
 
-if ($_GET['nointro'] && $_GET['nointro'] == 1) {
-	$nointro = 1;
+if ($_GET['old'] && $_GET['old'] == 1) {
+	$old = 1;
 } else {
-	$nointro = 0;
+	$old = 0;
 }
 
 switch ($_GET['console']) {
@@ -34,11 +34,7 @@ switch ($_GET['console']) {
 				$systems_cd_query[] = '`d`.`d_media`='.$system['s_id'];
 			else if ($system['s_media'] == 2)
 				$systems_dvd_query[] = '`d`.`d_media`='.$system['s_id'];
-			if ($nointro) {
-				$title = $system['s_company'].' - '.$system['s_title'];
-			} else {
-				$title = $system['s_full'];
-			}
+			$title = $system['s_company'].' - '.$system['s_title'];
 		}
 		$systems_query = '('.implode(' OR ', $systems_query).')';
 		if (isset($systems_cd_query))
@@ -60,23 +56,16 @@ switch ($_GET['console']) {
 
 $discs = $mysqli->query($query_count)->fetch_array();
 $discscount = $discs[0];
-if ($nointro) {
-	$date = date('Ymd', $discs[1] - ($psxdb_config['timezone'] * 3600));
-} else {
-	$date = date('Y-m-d H-i-s', $discs[1] - ($psxdb_config['timezone'] * 3600));
-}
+$date = date('Ymd H-i-s', $discs[1] - ($psxdb_config['timezone'] * 3600));
+
 $tracks = $mysqli->query($query);
-if ($nointro) {
-	echo "clrmamepro (\r\n\tname \"".$title."\"\r\n\tdescription \"".$title."\"\r\n\tcategory \"Console\"\r\n\tversion \"".$date."\"\r\n\tauthor \"redump.org\"\r\n)\r\n\r\n";
-} else {
-	echo "clrmamepro (\r\n\tname \"".$title."\"\r\n\tdescription \"".$title." (".$discscount.") (".$date.")\"\r\n\tcategory Console\r\n\tversion \"".$date."\"\r\n\tauthor \"redump.org\"\r\n)\r\n\r\n";
-}
+echo "clrmamepro (\r\n\tname \"".$title."\"\r\n\tdescription \"".$title." (".$discscount.")\"\r\n\tcategory Console\r\n\tversion \"".$date."\"\r\n\tauthor \"redump.org\"\r\n)\r\n\r\n";
 while ($track = $tracks->fetch_array()) {
 	if ($track['t_number'] == 1 || $track['t_number'] == '') {
-		echo "game (\r\n\tname \"".discfilename($track, $nointro)."\"\r\n\tdescription \"".discfilename($track, $nointro)."\"\r\n";
+		echo "game (\r\n\tname \"".discfilename($track, $old)."\"\r\n\tdescription \"".discfilename($track, $old)."\"\r\n";
 		if (isset($track['d_number'])) {
 			if ($track['d_number'] == 1) {
-				$clone = "\tcloneof \"".discfilename($track, $nointro)."\"\r\n";
+				$clone = "\tcloneof \"".discfilename($track, $old)."\"\r\n";
 				$name = $track['d_title'];
 			} else {
 				if ($name == $track['d_title'])
@@ -84,18 +73,18 @@ while ($track = $tracks->fetch_array()) {
 			}
 		}
 		if ($track['s_description'] == 1) {
-			if ($nointro) {
+			if ($old) {
 				echo "\trom ( name \"".discfilename($track, 1).".cue\" size ".$track['d_cue_size_ni']." crc ".$track['d_cue_crc32_ni']." md5 ".$track['d_cue_md5_ni']." sha1 ".$track['d_cue_sha1_ni']." )\r\n";
 			} else {
 				echo "\trom ( name \"".discfilename($track).".cue\" size ".$track['d_cue_size']." crc ".$track['d_cue_crc32']." md5 ".$track['d_cue_md5']." sha1 ".$track['d_cue_sha1']." )\r\n";
 			}
 		} else if ($track['s_description'] == 2)
-			echo "\trom ( name \"".discfilename($track, $nointro).".gdi\" size ".$track['d_cue_size']." crc ".$track['d_cue_crc32']." md5 ".$track['d_cue_md5']." sha1 ".$track['d_cue_sha1']." )\r\n";
+			echo "\trom ( name \"".discfilename($track, $old).".gdi\" size ".$track['d_cue_size']." crc ".$track['d_cue_crc32']." md5 ".$track['d_cue_md5']." sha1 ".$track['d_cue_sha1']." )\r\n";
 		//if ($disc['d_media'] == 1)
-		//	echo "\trom ( name \"".discfilename($track, $nointro).".gdi\" size ".$track['d_cue_size']." crc ".$track['d_cue_crc32']." md5 ".$track['d_cue_md5']." sha1 ".$track['d_cue_sha1']." )\r\n";
+		//	echo "\trom ( name \"".discfilename($track, $old).".gdi\" size ".$track['d_cue_size']." crc ".$track['d_cue_crc32']." md5 ".$track['d_cue_md5']." sha1 ".$track['d_cue_sha1']." )\r\n";
 	}
 	if ($track['s_description'] != 2)
-		echo "\trom ( name \"".trackfilename($track, $nointro).'.'.$track['s_extension'].'" size '.$track['t_size'].' crc '.$track['t_crc32'].' md5 '.$track['t_md5'].' sha1 '.$track['t_sha1']." )\r\n";
+		echo "\trom ( name \"".trackfilename($track, $old).'.'.$track['s_extension'].'" size '.$track['t_size'].' crc '.$track['t_crc32'].' md5 '.$track['t_md5'].' sha1 '.$track['t_sha1']." )\r\n";
 	else
 		echo "\trom ( name \"Track".str_pad($track['t_number'], 2, '0', STR_PAD_LEFT).'.bin" size '.$track['t_size'].' crc '.$track['t_crc32'].' md5 '.$track['t_md5'].' sha1 '.$track['t_sha1']." )\r\n";
 	if ($track['t_number'] == $track['d_tracks_count'] || $track['t_number'] == '' || $track['d_tracks_count'] == '') echo ")\r\n\r\n";

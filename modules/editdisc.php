@@ -163,9 +163,6 @@ if (isset($_GET['action'])) {
 		unset($_POST['d_protection_a'], $_POST['d_protection_l'], $_POST['d_libcrypt']);
 
 	// d) dumpers
-	// Shared
-	if (!preg_match('@^[012]$@', $_POST['d_shared']))
-		errorXML('Please select disc sharing status!');
 	// Status
 	if (!preg_match('@^[1245]$@', $_POST['d_status']))
 		errorXML('Please select disc dumping status!');
@@ -304,7 +301,6 @@ if (isset($_GET['action'])) {
 	`d_ring`,
 	`d_serial`,
 	`d_status`,
-	`d_shared`,
 	`d_media`,
 	`d_title`,
 	`d_title_foreign`,
@@ -334,7 +330,6 @@ if (isset($_GET['action'])) {
 	'.(($_POST['d_ring'] != '') ? '"'.addslashes($_POST['d_ring']).'"' : 'NULL').',
 	'.(($_POST['d_serial'] != '') ? '"'.addslashes($_POST['d_serial']).'"' : 'NULL').',
 	'.intval($_POST['d_status']).',
-	'.intval($_POST['d_shared']).',
 	'.intval($disc['d_media']).',
 	"'.addslashes($_POST['d_title']).'",
 	'.(($_POST['d_title_foreign'] != '') ? '"'.addslashes($_POST['d_title_foreign']).'"' : 'NULL').',
@@ -414,7 +409,6 @@ if (isset($_GET['action'])) {
 			$rss->changes('Anti-modchip protection', booleaninfo($disc['d_protection_a']), booleaninfo($newdisc['d_protection_a']));
 			$rss->changes('LibCrypt protection', libcrypt($disc['d_protection_l']), libcrypt($newdisc['d_protection_l']));
 		}
-		$rss->changes('Shared', sharing_status($disc['d_shared']), sharing_status($newdisc['d_shared']));
 		$rss->changes('Status', status($disc['d_status']), status($newdisc['d_status']));
 		$rss->changes('Dumpers', $old_dumpers_names, $dumpers_names);
 		$rss->changes('Comments', psxdbcode(nl2br($disc['d_comments'])), psxdbcode(nl2br($newdisc['d_comments'])));
@@ -616,7 +610,6 @@ if (defined('ADMIN') || defined('MODERATOR')) {
 	$query = $mysqli->query('SELECT * FROM `du` WHERE (`du`.`du_status`=1 OR `du`.`du_status`=2) AND `du`.`d_id`='.$disc['d_id']);
 	while ($cur_dumper = $query->fetch_array())
 		$cur_dumpers[] = $cur_dumper['u_id'];
-	$form->radio(array('name' => 'd_shared', 'caption' => 'Shared', 'radio' => array(array(sharing_status(0).' '.sharing_status_text(0), 0), array(sharing_status(1).' '.sharing_status_text(1), 1), array(sharing_status(2).' '.sharing_status_text(2), 2)), 'check' => $disc['d_shared']));
 	$form->radio(array('name' => 'd_status', 'caption' => 'Status', 'radio' => array(array(status(1).' '.statustext(1), 1), array(status(2).' '.statustext(2), 2), array(status(4).' '.statustext(4), 4), array(status(5).' '.statustext(5), 5)), 'check' => $disc['d_status']));
 	$form->select(array('name' => 'd_dumpers', 'caption' => 'Dumpers', 'multiple' => 1, 'option' => $dumpers, 'select' => $cur_dumpers));
 	$form->text(array('name' => 'd_dumpers_text', 'caption' => 'Other dumpers', 'value' => $disc['d_dumpers']));

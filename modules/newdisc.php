@@ -175,9 +175,6 @@ if (isset($_GET['action'])) {
 
 	// d) dumpers
 	if (defined('ADMIN') || defined('MODERATOR')) {
-		// Shared
-		if (!preg_match('@^[012]$@', $_POST['d_shared']))
-			errorXML('Please select disc sharing status!');
 		// Status
 		if (!preg_match('@^[45]$@', $_POST['d_status']))
 			errorXML('Please select disc dumping status!');
@@ -321,7 +318,6 @@ if (isset($_GET['action'])) {
 	`d_ring`,
 	`d_serial`,
 	`d_status`,
-	`d_shared`,
 	`d_media`,
 	`d_title`,
 	`d_title_foreign`,
@@ -350,7 +346,6 @@ if (isset($_GET['action'])) {
 	'.(($_POST['d_ring'] != '') ? '"'.addslashes($_POST['d_ring']).'"' : 'NULL').',
 	'.(($_POST['d_serial'] != '') ? '"'.addslashes($_POST['d_serial']).'"' : 'NULL').',
 	'.intval($_POST['d_status']).',
-	'.intval($_POST['d_shared']).',
 	'.intval($_POST['d_media']).',
 	"'.addslashes($_POST['d_title']).'",
 	'.(($_POST['d_title_foreign'] != '') ? '"'.addslashes($_POST['d_title_foreign']).'"' : 'NULL').',
@@ -406,7 +401,6 @@ if (isset($_GET['action'])) {
 				$rss->row('Anti-modchip protection', booleaninfo($disc['d_protection_a']));
 				$rss->row('LibCrypt protection', libcrypt($disc['d_protection_l']));
 			}
-			$rss->row('Shared', sharing_status($disc['d_shared']));
 			$rss->row('Status', status($disc['d_status']));
 			$rss->row('Dumpers', $dumpers_names);
 			$rss->row('Comments', psxdbcode(nl2br($disc['d_comments'])));
@@ -657,7 +651,6 @@ if ($system['s_id'] == 1) {
 // d) dumpers
 if (defined('ADMIN') || defined('MODERATOR')) {
 	$form->fieldset('Dumpers and status');
-	$form->radio(array('name' => 'd_shared', 'caption' => 'Shared', 'radio' => array(array(sharing_status(0).' '.sharing_status_text(0), 0), array(sharing_status(1).' '.sharing_status_text(1), 1), array(sharing_status(2).' '.sharing_status_text(2), 2))));
 	if (isset($_GET['id'])) {
 		$form->statictext(array('caption' => 'Status', 'contents' => status(4)));
 		$form->hidden(array('name' => 'd_status', 'value' => 4));

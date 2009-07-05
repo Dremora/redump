@@ -106,24 +106,6 @@ switch ($_GET['action']) {
 			error('Error making cue for disc with ID '.htmlspecialchars($_GET['id']).'!');
 		redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
 		break;
-	case 'shared':
-		if (!defined('ADMIN') && !defined('MODERATOR')) {
-			redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
-		}
-		if (!$mysqli->query('UPDATE `discs` SET `discs`.`d_shared`=1 WHERE `discs`.`d_id`='.$disc['d_id'])) {
-			error('Error uppdating disc sharing status!');
-		}
-		redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
-		break;
-	case 'notshared':
-		if (!defined('ADMIN') && !defined('MODERATOR')) {
-			redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
-		}
-		if (!$mysqli->query('UPDATE `discs` SET `discs`.`d_shared`=0 WHERE `discs`.`d_id`='.$disc['d_id'])) {
-			error('Error uppdating disc sharing status!');
-		}
-		redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
-		break;
 	// AJAX response
 	case 'mydisc':
 		if (!defined('LOGGED')) redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
@@ -232,11 +214,6 @@ if (defined('ADMIN') || defined('MODERATOR')) {
 	} else if ($disc['s_description'] == 2) {
 		$tools[] = '<a href="/disc/'.$disc['d_id'].'/rebuildgdi/">Rebuild GDI</a>';
 	}
-	if ($disc['d_shared'] == 1) {
-		$tools[] = '<a href="/disc/'.$disc['d_id'].'/notshared/">Not shared</a>';
-	} else {
-		$tools[] = '<a href="/disc/'.$disc['d_id'].'/shared/">Shared</a>';
-	}
 	$tools[] = '<a style="color: #cc0000;" href="/disc/'.$disc['d_id'].'/delete/">Delete</a>';
 }
 
@@ -307,10 +284,6 @@ echo '</table>
 <table class="dumpinfo" cellspacing="0">
 <tr><th>Status</th><td>'.status($disc['d_status']).'</td></tr>
 ';
-if (defined('ADMIN') || defined('MODERATOR') || defined('DUMPER')) {
-	echo '<tr><th>Shared</th><td>'.sharing_status($disc['d_shared']).'</td></tr>
-';
-}
 
 if ($dumpers->num_rows || $disc['d_dumpers']) {
 	echo '<tr><th>Dumpers</th><td>';

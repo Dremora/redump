@@ -5,7 +5,7 @@ if (!defined('PSXDB')) {
 	die();
 }
 
-if (isset($_GET['nointro']) && $_GET['nointro'] == 1) {
+if (isset($_GET['old']) && $_GET['old'] == 1) {
 	$discs = $mysqli->query('SELECT * FROM `discs` AS `d`,`systems` AS `s` WHERE `s`.`s_id`=`d`.`d_media` AND `s`.`s_short`="'.addslashes($_GET['system']).'" AND `s`.`s_description`=1 ORDER BY `d`.`d_title`,`d`.`d_region`,`d`.`d_version`,`d`.`d_languages`,`d`.`d_number`');
 	if (!$discs->num_rows)
 		error('System "'.htmlspecialchars($_GET['console']).'" doesn\'t exist.');
