@@ -27,6 +27,7 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <a href="/discs/system/pc-98/">&bull; PC-98 series</a>
 <a href="/discs/system/playdia/">&bull; Playdia</a>
 <a href="/discs/system/pippin/">&bull; Pippin</a>
+<a href="/discs/system/mac/">&bull; Macintosh</a>
 <?php if (defined('ADMIN') || defined('MODERATOR')) : ?>
 <a href="/discs-wip/">WIP discs</a>
 <?php endif; ?>
@@ -59,6 +60,7 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <a href="/datfile/pc-98/">PC-98 series datfile</a>
 <a href="/datfile/playdia/">Playdia datfile</a>
 <a href="/datfile/pippin/">Pippin datfile</a>
+<a href="/datfile/mac/">Macintosh datfile</a>
 <a href="/cues/">Cuesheets archive</a>
 <a href="/gdi/">GDI archive</a>
 </div>
@@ -107,6 +109,7 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/pc-98/">My PC-98 series discs</a>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/playdia/">My Playdia discs</a>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/pippin/">My Pippin discs</a>
+<a href="/list/have/<?php echo $psxdb_user['username']; ?>/mac/">My Macintosh discs</a>
 </div>
 <?php endif; ?>
 <div id="main">

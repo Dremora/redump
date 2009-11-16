@@ -31,21 +31,21 @@ if (isset($_GET['action'])) {
 		errorXML('System with ID="'.htmlspecialchars($_POST['d_media']).'" doesn\'t exist!');
 	
 	// Title
-	if (count($_POST['d_title']) > 255 || $_POST['d_title'] == '')
+	if (strlen($_POST['d_title']) > 255 || $_POST['d_title'] == '')
 		errorXML('Disc title length should be between 1 and 255 characters!');
 	$_POST['d_title'] = str_replace(array(' - ', '  '), array(': ', ' '), $_POST['d_title']);
 	
 	// Alternative title
-	if (count($_POST['d_title_foreign']) > 255)
+	if (strlen($_POST['d_title_foreign']) > 255)
 		errorXML('Disc alternative title length shouldn\'t exceed 255 characters!');
 	$_POST['d_title_foreign'] = str_replace(array(' - ', '  '), array(': ', ' '), $_POST['d_title_foreign']);
 	
 	// Number
-	if (count($_POST['d_number']) > 10)
+	if (strlen($_POST['d_number']) > 10)
 		errorXML('Disc number length shouldn\'t exceed 10 characters!');
 	
 	// Label / Disc title
-	if (count($_POST['d_label']) > 255)
+	if (strlen($_POST['d_label']) > 255)
 		errorXML('Disc title length shouldn\'t exceed 255 characters!');
 	
 	// Category
@@ -58,12 +58,17 @@ if (isset($_GET['action'])) {
 		errorXML('Please select disc region!');
 	
 	// Ring
-	if (count($_POST['d_ring']) > 127) {
-		errorXML('Disc ring length shouldn\'t exceed 127 characters!');
+	if (strlen($_POST['d_ring']) > 127) {
+		errorXML('Disc ringcode length shouldn\'t exceed 127 characters!');
+	}
+	
+	// Ring
+	if ($_POST['d_media'] != 1 && strlen($_POST['d_ring']) < 5) {
+		errorXML('Disc ringcode shouldn\'t be blank!');
 	}
 	
 	// Barcode
-	if (count($_POST['d_barcode']) > 255) {
+	if (strlen($_POST['d_barcode']) > 255) {
 		errorXML('Disc barcode length shouldn\'t exceed 255 characters!');
 	}
 	
@@ -74,12 +79,12 @@ if (isset($_GET['action'])) {
 				errorXML('Language "'.htmlspecialchars($language).'" doesn\'t exist!');
 		}
 		$_POST['d_languages'] = strtolower(implode(',', $_POST['d_languages']));
-		if (count($_POST['d_languages']) > 127)
+		if (strlen($_POST['d_languages']) > 127)
 			errorXML('Please check languages!');
 	}
 	
 	// Serial
-	if (count($_POST['d_serial']) > 127) {
+	if (strlen($_POST['d_serial']) > 127) {
 		errorXML('Disc serial length shouldn\'t exceed 127 characters!');
 	}
 	
@@ -109,18 +114,18 @@ if (isset($_GET['action'])) {
 	
 	// Comments
 	$_POST['d_comments'] = str_replace(array('&amp;lt;', '&amp;gt;'), array('&lt;', '&gt;'), str_replace('&', '&amp;', $_POST['d_comments']));
-	if (count($_POST['d_comments']) > 50000)
+	if (strlen($_POST['d_comments']) > 50000)
 		errorXML('Disc comments length shouldn\'t exceed 50000 characters!');
 	
 	// b) version
 	
 	// Version
-	if (count($_POST['d_version']) > 127)
+	if (strlen($_POST['d_version']) > 127)
 		errorXML('Disc version length shouldn\'t exceed 127 characters!');
 	
 	// Version (datfile)
 	if (defined('ADMIN') || defined('MODERATOR')) {
-		if (count($_POST['d_version_datfile']) > 127)
+		if (strlen($_POST['d_version_datfile']) > 127)
 			errorXML('Disc version (datfile) length shouldn\'t exceed 127 characters!');
 	}
 
@@ -143,7 +148,7 @@ if (isset($_GET['action'])) {
 		$_POST['d_edition'] = implode(', ', $editions);
 		unset($editions);
 	}
-	if (count($_POST['d_edition']) > 255)
+	if (strlen($_POST['d_edition']) > 255)
 		errorXML('Disc editions length shouldn\'t exceed 255 characters!');
 
 	// c) protection
@@ -155,7 +160,7 @@ if (isset($_GET['action'])) {
 		if (defined('ADMIN') || defined('MODERATOR')) {
 			if (!preg_match('@^[012]$@', $_POST['d_protection_l']))
 				errorXML('Please select disc LibCrypt protection status!');
-			if (count($_POST['d_libcrypt']) > 50000000)
+			if (strlen($_POST['d_libcrypt']) > 50000000)
 				errorXML('Disc LibCrypt data length shouldn\'t exceed 50000000 characters!');
 			if (!preg_match('@^(MSF: [0-9][0-9]:[0-9][0-9]:[0-9][0-9] Q-Data:([ :]?[A-Fa-f0-9][A-Fa-f0-9]){12})?((\n|\r\n)MSF: [0-9][0-9]:[0-9][0-9]:[0-9][0-9] Q-Data:([ :]?[A-Fa-f0-9][A-Fa-f0-9]){12})*$@', $_POST['d_libcrypt']))
 				errorXML('Please check LibCrypt data!');
@@ -163,7 +168,7 @@ if (isset($_GET['action'])) {
 			if ($_POST['d_libcrypt'] != '')
 				$_POST['d_libcrypt'] = '0x'.$_POST['d_libcrypt'];
 		} else {
-			if (count($_POST['d_libcrypt']) > 50000000)
+			if (strlen($_POST['d_libcrypt']) > 50000000)
 				errorXML('Disc LibCrypt data length shouldn\'t exceed 50000000 characters!');
 			if ($_POST['d_libcrypt_no'] == 1)
 				$_POST['d_libcrypt'] = "NO LIBCRYPT\n\n";
@@ -195,7 +200,7 @@ if (isset($_GET['action'])) {
 		}
 		// Additional dumpers
 		if ($_POST['d_dumpers_text'] != '') {
-			if (count($_POST['d_dumpers_text']) > 255)
+			if (strlen($_POST['d_dumpers_text']) > 255)
 				errorXML('Other dumpers length shouldn\'t exceed 255 characters!');
 			foreach (explode(',', str_replace(array(', ', '  '), array(',', ' '), $_POST['d_dumpers_text'])) as $dumper)
 				$dumpers_names[] = $dumper;
@@ -452,8 +457,10 @@ if (isset($_GET['action'])) {
 			if (!$rss->query())
 				errorXML('Error adding RSS!');
 		}
-		if (!make_cues($disc['d_id']))
-			errorXML('Error making cue!');	
+		if (!make_cues($disc['d_id'])) {
+			errorXML('Error making cue!');
+		}
+		generate_datfile($disc['d_id']);
 		okXML('Done. <a href="/disc/'.$disc['d_id'].'/">Go to the disc</a>');
 	} else {
 		if ($system['s_media'] == 1) {

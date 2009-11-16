@@ -510,8 +510,10 @@ if (isset($_GET['action'])) {
 		if (!$rss->query())
 			errorXML('Error adding RSS!');
 	}
-	if (!make_cues($disc['d_id']))
+	if (!make_cues($disc['d_id'])) {
 		errorXML('Error making cue!');
+	}
+	generate_datfile($disc['d_id']);
 	okXML('Done. <a href="/disc/'.$disc['d_id'].'/">Go to the disc</a>');
 }
 

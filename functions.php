@@ -756,7 +756,7 @@ function make_cues($id) {
 			}
 			if ($track['t_number'] == 3)
 				$ssector = 45000;
-			$cue .= $track['t_number'].' '.$ssector.' '.$ttype.' 2352 Track'.str_pad($track['t_number'], 2, '0', STR_PAD_LEFT).'.bin 0'."\r\n";
+			$cue .= $track['t_number'].' '.$ssector.' '.$ttype.' 2352 "'.trackfilename($track).'.bin" 0'."\r\n";
 			$ssector += ($track['t_size'] / 2352);
 		}
 		$cue_size  = strlen($cue);
@@ -790,5 +790,55 @@ function make_cues($id) {
 	return $mysqli->query('UPDATE `discs` SET `discs`.`d_cue_size`='.$cue_size.',`discs`.`d_cue_crc32`="'.$cue_crc32.'",`discs`.`d_cue_md5`="'.$cue_md5.'",`discs`.`d_cue_sha1`="'.$cue_sha1.'",`discs`.`d_cue_title`="'.addslashes($cue_title).'",`discs`.`d_cue_contents`="'.addslashes($cue).'",`discs`.`d_cue_size_ni`='.$cue_size_ni.',`discs`.`d_cue_crc32_ni`="'.$cue_crc32_ni.'",`discs`.`d_cue_md5_ni`="'.$cue_md5_ni.'",`discs`.`d_cue_sha1_ni`="'.$cue_sha1_ni.'",`discs`.`d_cue_title_ni`="'.addslashes($cue_title_ni).'",`discs`.`d_cue_contents_ni`="'.addslashes($cue_ni).'" WHERE `discs`.`d_id`='.$id);
 }
 
+function generate_datfile($id) {
+	global $mysqli;
+	$system = $mysqli->query('SELECT systems.s_media FROM discs,systems WHERE discs.d_media=systems.s_id AND discs.d_id='.(int)$id);
 
-?>
+	if ($system->num_rows == 0) {
+		return false;
+	}
+	$system = $system->fetch_array();
+
+	switch ($system['s_media']) {
+		case 1:
+			$query = 'SELECT * FROM discs d, tracks t, systems s WHERE d.d_id='.(int)$id.' AND d.d_media=s.s_id AND d.d_id=t.d_id ORDER BY t.t_number';
+			break;
+		case 2:
+			$query = 'SELECT d.*, s.*, dvd.d_size AS t_size, dvd.d_crc32 AS t_crc32, dvd.d_md5 AS t_md5, dvd.d_sha1 AS t_sha1 FROM discs d, dvd, systems s WHERE d.d_id='.(int)$id.' AND d.d_media=s.s_id AND d.d_id=dvd.d_id';
+			break;
+	}
+	
+	$tracks = $mysqli->query($query);
+	
+	ob_start();
+	
+	while ($track = $tracks->fetch_array()) {
+		if ($track['t_number'] == 1 || $track['t_number'] == '')
+		{
+			echo '	<game name="'.htmlspecialchars(discfilename($track)).'">'."\r\n".
+				'		<description>'.htmlspecialchars(discfilename($track)).'</description>'."\r\n";
+			if (isset($track['s_description']))
+			{
+				if ($track['s_description'] == 1)
+				{
+					echo '		<rom name="'.htmlspecialchars(discfilename($track)).'.cue" size="'.$track['d_cue_size'].'" crc="'.$track['d_cue_crc32'].'" md5="'.$track['d_cue_md5'].'" sha1="'.$track['d_cue_sha1'].'"/>'."\r\n";
+				}
+				else if ($track['s_description'] == 2)
+				{
+					echo '		<rom name="'.htmlspecialchars(discfilename($track)).'.gdi" size="'.$track['d_cue_size'].'" crc="'.$track['d_cue_crc32'].'" md5="'.$track['d_cue_md5'].'" sha1="'.$track['d_cue_sha1'].'"/>'."\r\n";
+				}
+			}
+		}
+		echo '		<rom name="'.htmlspecialchars(trackfilename($track)).'.'.$track['s_extension'].'" size="'.$track['t_size'].'" crc="'.$track['t_crc32'].'" md5="'.$track['t_md5'].'" sha1="'.$track['t_sha1'].'"/>'."\r\n";
+		if ($track['t_number'] == $track['d_tracks_count'] || $track['t_number'] == '' || $track['d_tracks_count'] == '')
+		{
+			echo '	</game>'."\r\n";
+		}
+	}
+	
+	$disc_datfile = ob_get_clean();
+	
+	$mysqli->query('REPLACE INTO discs_cache (id, datfile_contents) VALUES ('.(int)$id.', "'.addslashes($disc_datfile).'")');
+	
+	return $disc_datfile;
+}

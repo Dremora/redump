@@ -169,7 +169,7 @@ if ($_GET['system'] != '') {
 // 2. Region
 if (isset($_GET['region'])) {
 	if ($_GET['region'] == 'Eu')
-		$query .= ' AND `d`.`d_region`<>"U" AND `d`.`d_region`<>"J" AND `d`.`d_region`<>"A" AND `d`.`d_region`<>"K"';
+		$query .= ' AND `d`.`d_region`<>"U" AND `d`.`d_region`<>"J" AND `d`.`d_region`<>"A" AND `d`.`d_region`<>"K" AND `d`.`d_region`<>"W"';
 	else if ($_GET['region'] == 'As')
 		$query .= ' AND (`d`.`d_region`="J" OR `d`.`d_region`="A" OR `d`.`d_region`="K")';
 	else {
@@ -372,7 +372,7 @@ echo '<div class="textblock"><p>
 <a href="/discs/"><b>Reset</b></a> &bull; <b>Displaying results '.$dispres.' of '.$totaldiscs[0].'</b>';
 echo '</p><p>
 Starts with: '.filterlink('letter', '', 'All').' | '.filterlink('letter', '~', '~').' '.filterlink('letter', 'a', 'A').' '.filterlink('letter', 'b', 'B').' '.filterlink('letter', 'c', 'C').' '.filterlink('letter', 'd', 'D').' '.filterlink('letter', 'e', 'E').' '.filterlink('letter', 'f', 'F').' '.filterlink('letter', 'g', 'G').' '.filterlink('letter', 'h', 'H').' '.filterlink('letter', 'i', 'I').' '.filterlink('letter', 'j', 'J').' '.filterlink('letter', 'k', 'K').' '.filterlink('letter', 'l', 'L').' '.filterlink('letter', 'm', 'M').' '.filterlink('letter', 'n', 'N').' '.filterlink('letter', 'o', 'O').' '.filterlink('letter', 'p', 'P').' '.filterlink('letter', 'q', 'Q').' '.filterlink('letter', 'r', 'R').' '.filterlink('letter', 's', 'S').' '.filterlink('letter', 't', 'T').' '.filterlink('letter', 'u', 'U').' '.filterlink('letter', 'v', 'V').' '.filterlink('letter', 'w', 'W').' '.filterlink('letter', 'x', 'X').' '.filterlink('letter', 'y', 'Y').' '.filterlink('letter', 'z', 'Z').'
- &bull; Region: '.filterlink('region', '', 'All').' | '.filterlink('region', 'Eu', 'Europe').' &bull; '.filterlink('region', 'U', 'USA').' &bull; '.filterlink('region', 'As', 'Asia').'
+ &bull; Region: '.filterlink('region', '', 'All').' | '.filterlink('region', 'W', 'World').' &bull; '.filterlink('region', 'Eu', 'Europe').' &bull; '.filterlink('region', 'U', 'USA').' &bull; '.filterlink('region', 'As', 'Asia').'
  &bull; Status: '.filterlink('status', '', 'All').' | ';
 if (in_array($psxdb_user['id'], $psxdb_config['red_users'])) {
 	echo filterlink('status', '0', status(0)).' '.filterlink('status', '1', status(1)).' '.filterlink('status', '2', status(2)).' ';
