@@ -337,7 +337,6 @@ function display() {
 <title>redump.org &bull; '.str_replace('<br />', ' &bull; ', $psxdb['title']).'</title>
 <meta name="author" content="Redump Team" />
 <meta name="description" content="Redump - disc images information" />
-<meta name="keywords" content="PSX, PSone, PS1, PS2, Sony, PlayStation, dumping project, serials, chesksums, crc, crc-32, crc32, md5, sha-1, sha1, datfile, datfiles, iso, bin, cue, mdf, ccd, img, sub, Clone, CloneCD, EAC, IsoBuster, emulation, emulators, epsxe, pcsx, clrmamepro, database, goodpsx, SLUS, SCUS, SLES, SCES, SLPS" />
 <meta name="verify-v1" content="BE+hBNbeseE7psVMax1S2M7PMKlwT7ohSUgC5hvZy3k=" />
 <link rel="alternate" type="application/rss+xml" title="Redump RSS - Recent changes" href="/rss/recentchanges/" />
 <link rel="alternate" type="application/rss+xml" title="Redump Forum RSS - Latest posts" href="/rss/forum/" />

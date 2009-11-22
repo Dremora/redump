@@ -194,32 +194,23 @@ if (isset($_GET['action'])) {
 	if ($disc['s_media'] == 1) {
 		// Tracks
 		$cue = new Cueparser();
-		$cue_error = $cue->loadCuesheet($_POST['d_cue']);
-		if ($cue_error) {
-			errorXML('Cuesheet: row '.$cue->row.', error '.$cue_error);
+		$datfile = new Datfile();
+		if ($cue->loadCuesheet($_POST['d_cue']))
+		{
+			errorXML('Error parsing cuesheet in row '.$cue->row.'.');
 		}
-		$_POST['d_tracks'] = trim(strtolower(str_replace(array("\r\n", "\r"), "\n", $_POST['d_tracks'])));
-		if (!preg_match('@^[^\n]*size [0-9]{6,10} crc [0-9a-f]{8} md5 [0-9a-f]{32} sha1 [0-9a-f]{40}[^\n]*(\n[^\n]*size [0-9]{6,10} crc [0-9a-f]{8} md5 [0-9a-f]{32} sha1 [0-9a-f]{40}[^\n]*){0,98}$@', $_POST['d_tracks'])) {
-			errorXML('Please check ClrMamePro data!');
+		$datfile->parse($_POST['d_tracks'], $cue);
+
+		if ($datfile->tracks_count == 0)
+		{
+			errorXML('Error parsing datfile.');
 		}
-		
-		$_POST['d_tracks'] = explode("\n", $_POST['d_tracks']);
-		$tracks_count = 0;
-		if (count($_POST['d_tracks']) != $cue->trackscount) {
+		if ($datfile->tracks_count != $cue->trackscount)
+		{
 			errorXML('Different tracks count in cuesheet and ClrMamePro data!');
 		}
-		foreach ($_POST['d_tracks'] as $track) {
-			preg_match('@^[^\n]*size ([0-9]{6,10}) crc ([0-9a-f]{8}) md5 ([0-9a-f]{32}) sha1 ([0-9a-f]{40})[^\n]*$@', $track, $matches);
-			$tracks_count++;
-			$tracks[$tracks_count]['size']      = $matches[1];
-			$tracks[$tracks_count]['crc32']     = $matches[2];
-			$tracks[$tracks_count]['md5']       = $matches[3];
-			$tracks[$tracks_count]['sha1']      = $matches[4];
-			$tracks[$tracks_count]['pregap']    = $cue->tracks[$tracks_count]['pregap'];
-			$tracks[$tracks_count]['type']      = $cue->tracks[$tracks_count]['type'];
-			$tracks[$tracks_count]['flags']     = $cue->tracks[$tracks_count]['flags'];
-		}
-		unset($_POST['d_tracks']);
+		$tracks_count = $datfile->tracks_count;
+		$tracks = $datfile->tracks;
 
 		// Write offset
 		if ($_POST['d_offset'] != '') {
@@ -623,7 +614,7 @@ if ($system['s_media'] == 1) {
 	$cue = new Cueparser();
 	while ($track = $tracksquery->fetch_array()) {
 		// Checksums
-		$tracks .= 'size '.$track['t_size'].' crc '.$track['t_crc32'].' md5 '.$track['t_md5'].' sha1 '.$track['t_sha1']."\n";
+		$tracks .= 'size="'.$track['t_size'].'" crc="'.$track['t_crc32'].'" md5="'.$track['t_md5'].'" sha1="'.$track['t_sha1']."\"\n";
 		// Cue
 		$cue->addTrack(array('type' => $track['t_type'], 'pregap' => $track['t_pregap'], 'flags' => $track['t_flags']));
 	}
