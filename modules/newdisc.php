@@ -456,6 +456,7 @@ if (isset($_GET['action'])) {
 	} else {
 		if ($system['s_media'] == 1) {
 			$cue = new Cueparser();
+			$_POST['d_tracks'] = array();
 			for ($number = 1; $number <= $tracks_count; $number++) {
 				$_POST['d_tracks'][] = 'size '.$tracks[$number]['size'].' crc '.$tracks[$number]['crc32'].' md5 '.$tracks[$number]['md5'].' sha1 '.$tracks[$number]['sha1'];
 				$cue->addTrack(array('type' => $tracks[$number]['type'], 'pregap' => $tracks[$number]['pregap']));
