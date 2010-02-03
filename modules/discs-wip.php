@@ -23,7 +23,7 @@ if (!$discs->num_rows) {
 }
 
 echo '<div class="gamesblock"><table class="games" cellspacing="0">'."\n\t".'<tr>';
-echo '<th>Region</th><th>Title</th><th>Version</th><th>Edition</th><th>EXE date</th><th>Languages</th><th>System</th><th>EDC</th><th>Offset</th><th>Dumper</th><th>Serial</th></tr>';
+echo '<th>Region</th><th>Title</th><th>Version</th><th>Edition</th><th>EXE date</th><th>Languages</th><th>System</th><th>Dumper</th><th>Serial</th></tr>';
 while ($disc = $discs->fetch_array()) {
 	echo "\n\t".'<tr><td class="align-center">'.region($disc['d_region']).'</td><td>';
 	if (defined('ADMIN') || defined('MODERATOR')) echo '<a href="/newdisc/'.$disc['d_id'].'/">';
@@ -31,7 +31,7 @@ while ($disc = $discs->fetch_array()) {
 	if (isset($disc['d_number']))
 		echo ' (Disc '.$disc['d_number'].')';
 	if (defined('ADMIN') || defined('MODERATOR')) echo '</a>';
-	echo '</td><td>'.htmlspecialchars($disc['d_version']).'</td><td>'.htmlspecialchars($disc['d_edition']).'</td><td>'.$disc['d_date'].'</td><td>'.languages($disc['d_languages']).'</td><td>'.$disc['s_short'].'</td><td>'.booleaninfo($disc['d_edc']).'</td><td>'.write_offset($disc['d_offset']).'</td><td>'.$disc['username'].'</td><td>'.$disc['d_serial'].'</td></tr>';
+	echo '</td><td>'.htmlspecialchars($disc['d_version']).'</td><td>'.htmlspecialchars($disc['d_edition']).'</td><td>'.$disc['d_date'].'</td><td>'.languages($disc['d_languages']).'</td><td>'.$disc['s_short'].'</td><td>'.$disc['username'].'</td><td>'.$disc['d_serial'].'</td></tr>';
 }
 echo "\n</table></div>";
 display();
