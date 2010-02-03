@@ -79,15 +79,13 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <a href="http://forum.<?php echo $_SERVER['HTTP_HOST']; ?>/userlist.php">Users</a>
 <a href="irc://irc.foreverchat.net/redump">IRC: #redump</a>
 <a href="mailto:redump.team@gmail.com">E-mail</a>
-<?php if (defined('ADMIN') || defined('MODERATOR')) : ?>
-<a href="http://tracker.redump.org/">Tracker</a>
+<?php if (defined('ADMIN') || defined('MODERATOR') || defined('DUMPER')): ?>
+<a href="http://hddx.haldrie.com/">HDDX Tracker</a>
 <?php endif; ?>
 </div>
 
 <div class="submenu" id="submenu4" onmouseout="hideelement('4');" onmouseover="showelement('4');">
 <a href="http://www.no-intro.org/">No-Intro</a><?php
-//<a href="http://psxdata.snesorama.us/">PlayStation DataCenter</a>
-//<a href="http://www.defconsoft.co.uk/">PAL PlayStation Collective</a>
 ?>
 </div>
 
