@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('PSXDB')) {
+if (!defined('PSXDB') || (!defined('ADMIN') && !defined('MODERATOR'))) {
 	header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
 	die();
 }
@@ -202,15 +202,8 @@ if (isset($_GET['quicksearch'])) {
 // 5. Page
 if (isset($_GET['page']))
 {
-	if (!preg_match('@^(([1-9][0-9]*)|all)?$@', $_GET['page'])) error('Unknown page number - '.htmlspecialchars($_GET['page']).'.');
-	switch ($_GET['page'])
-	{
-		case 'all':
-			$limit[1] = 100000;
-			break;
-		default:
-			$limit[0] = ($_GET['page'] - 1) * $limit[1];
-	}
+	if (!preg_match('@^(([1-9][0-9]*))?$@', $_GET['page'])) error('Unknown page number - '.htmlspecialchars($_GET['page']).'.');
+	$limit[0] = ($_GET['page'] - 1) * $limit[1];
 }
 
 // 6.1 Sorting direction
@@ -368,10 +361,10 @@ if (($_GET['quicksearch'] != '' || $_GET['title'] != '') && $totaldiscs[0] == 1)
 }
 $dispres = ($limit[0] + 1).' - '.($limit[0] + $discs->num_rows);
 
-echo '<div class="textblock"><div>
+echo '<div class="textblock"><p>
 <a href="/discs/"><b>Reset</b></a>';
 if ($discs->num_rows > 0) echo ' &bull; <b>Displaying results '.$dispres.' of '.$totaldiscs[0].'</b>';
-echo '</div><div>
+echo '</p><p>
 Starts with: '.filterlink('letter', '', 'All').' | '.filterlink('letter', '~', '~').' '.filterlink('letter', 'a', 'A').' '.filterlink('letter', 'b', 'B').' '.filterlink('letter', 'c', 'C').' '.filterlink('letter', 'd', 'D').' '.filterlink('letter', 'e', 'E').' '.filterlink('letter', 'f', 'F').' '.filterlink('letter', 'g', 'G').' '.filterlink('letter', 'h', 'H').' '.filterlink('letter', 'i', 'I').' '.filterlink('letter', 'j', 'J').' '.filterlink('letter', 'k', 'K').' '.filterlink('letter', 'l', 'L').' '.filterlink('letter', 'm', 'M').' '.filterlink('letter', 'n', 'N').' '.filterlink('letter', 'o', 'O').' '.filterlink('letter', 'p', 'P').' '.filterlink('letter', 'q', 'Q').' '.filterlink('letter', 'r', 'R').' '.filterlink('letter', 's', 'S').' '.filterlink('letter', 't', 'T').' '.filterlink('letter', 'u', 'U').' '.filterlink('letter', 'v', 'V').' '.filterlink('letter', 'w', 'W').' '.filterlink('letter', 'x', 'X').' '.filterlink('letter', 'y', 'Y').' '.filterlink('letter', 'z', 'Z').'
  &bull; Region: '.filterlink('region', '', 'All').' | '.filterlink('region', 'W', 'World').' &bull; '.filterlink('region', 'Eu', 'Europe').' &bull; '.filterlink('region', 'U', 'USA').' &bull; '.filterlink('region', 'As', 'Asia').'
  &bull; Status: '.filterlink('status', '', 'All').' | ';
@@ -382,19 +375,19 @@ echo filterlink('status', '4', status(4)).' '.filterlink('status', '5', status(5
 
 echo $filter;
 
-echo '</div>';
+echo '</p>';
 
-if ($totaldiscs[0] > 50) {
-	echo '<form action="/discs/'.filterlink('vars_only').'" method="get"><div class="pages">Page: ';
-	$pages = new Paginator($_GET['page'], ceil($totaldiscs[0] / 50), '/discs/'.filterlink('vars_only'));
+if ($totaldiscs[0] > $limit[1]) {
+	echo '<div class="pages">Page: ';
+	$pages = new Paginator($_GET['page'], ceil($totaldiscs[0] / $limit[1]), '/discs/'.filterlink('vars_only'));
 	echo $pages->generate();
-	echo '<input type="text" name="page" style="width: 30px" /> <input type="submit" value="Go to page" /></div></form>';
+	echo '</div>';
 }
 
 echo '</div>';
 
 if (!$discs->num_rows) {
-	echo '<div class="textblock"><div>No discs found.</div></div>';
+	echo '<div class="textblock"><p>No discs found.</p></div>';
 	display();
 }
 

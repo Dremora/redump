@@ -4,9 +4,9 @@
 /* General */
 /***********/
 
-* {
-	margin: 0;
-	padding: 0;
+body, form, ul, ol, li, h1, h2, h3, h4, dl {
+	margin: 0px;
+	padding: 0px;
 }
 
 body, html {
@@ -520,4 +520,55 @@ a.userd:link, a.userd:visited {
 
 a.usera:hover, a.userm:hover, a.userd:hover {
 	color: #f26522;
+}
+
+/* Changes */
+
+ul.changes li {
+	float: left;
+}
+
+ul.changes dd {
+	float: left;
+}
+
+ul.changes dt {
+	float: left;
+	font-weight: bold;
+	clear: left;
+	width: 100px;
+}
+
+ul.changes {
+	overflow: auto;
+}
+
+ul.changes li {
+	margin-top: 15px;
+}
+
+ul.changes td {
+	padding: 1px 3px;
+}
+
+/* Pages */
+
+.pages li {
+	list-style-type: none;
+	margin: 1px 4px;
+	display: inline;
+}
+.pages ul {
+	overflow: auto;
+	display: inline;
+	margin-left: 0px;
+}
+
+ul#icons {
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	position:absolute;
+	right:10px;
+	top:10px;
 }

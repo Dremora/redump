@@ -327,10 +327,11 @@ function display() {
 	$tpl_main = trim(ob_get_clean());
 	// gzip contents
 	ob_start('ob_gzhandler');
-	if ((isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'application/xhtml+xml')) || stristr($_SERVER["HTTP_USER_AGENT"], 'W3C_Validator')) {
-		header("Content-type: application/xhtml+xml");
-		echo '<?xml version="1.0" encoding="utf-8"?>'."\n";
-	} else header("Content-type: text/html; charset=utf-8");
+	//if ((isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'application/xhtml+xml')) || stristr($_SERVER["HTTP_USER_AGENT"], 'W3C_Validator')) {
+	//	header("Content-type: application/xhtml+xml");
+	//	echo '<?xml version="1.0" encoding="utf-8"__?__>'."\n";
+	//} else
+	header("Content-type: text/html; charset=utf-8");
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -755,9 +756,21 @@ function make_cues($id) {
 			}
 			if ($track['t_number'] == 3)
 				$ssector = 45000;
-			$cue .= $track['t_number'].' '.$ssector.' '.$ttype.' 2352 "'.trackfilename($track).'.bin" 0'."\r\n";
+			$tracks_data[$track['t_number']-1] = array(
+				'number' => $track['t_number'],
+				'sector' => $ssector,
+				'type' => $ttype,
+				'name' => $track
+				
+			);
 			$ssector += ($track['t_size'] / 2352);
 		}
+		
+		foreach ($tracks_data as $track)
+		{
+			$cue .= str_pad($track['number'], strlen(sizeof($tracks_data)), ' ', STR_PAD_LEFT).' '.str_pad($track['sector'], strlen($tracks_data[sizeof($tracks_data)-1]['sector']), ' ', STR_PAD_LEFT).' '.$track['type'].' 2352 "'.trackfilename($track['name']).'.bin" 0'."\r\n";
+		}
+		
 		$cue_size  = strlen($cue);
 		$cue_crc32 = strtolower(sprintf('%08X', crc32($cue)));
 		$cue_md5   = md5($cue);

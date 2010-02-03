@@ -389,6 +389,7 @@ if (isset($_GET['action'])) {
 		$rss->changes('Barcode', htmlspecialchars($disc['d_barcode']), htmlspecialchars($newdisc['d_barcode']));
 		$rss->changes('EXE date', $disc['d_date'], $newdisc['d_date']);
 		$rss->changes('Version', htmlspecialchars($disc['d_version']), htmlspecialchars($newdisc['d_version']));
+		$rss->changes('Version (datfile)', htmlspecialchars($disc['d_version_datfile']), htmlspecialchars($newdisc['d_version_datfile']));
 		$rss->changes('Edition', htmlspecialchars($disc['d_edition']), htmlspecialchars($newdisc['d_edition']));
 		if ($disc['s_edc']) {
 			$rss->changes('EDC', booleaninfo($disc['d_edc']), booleaninfo($newdisc['d_edc']));

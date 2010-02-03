@@ -386,6 +386,7 @@ if (isset($_GET['action'])) {
 			$rss->row('Barcode', htmlspecialchars($disc['d_barcode']));
 			$rss->row('EXE date', $disc['d_date']);
 			$rss->row('Version', htmlspecialchars($disc['d_version']));
+			$rss->row('Version (datfile)', htmlspecialchars($disc['d_version_datfile']));
 			$rss->row('Edition', htmlspecialchars($disc['d_edition']));
 			if ($disc['s_edc']) {
 				$rss->row('EDC', booleaninfo($disc['d_edc']));

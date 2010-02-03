@@ -10,7 +10,7 @@ $psxdb['script'][] = '<script type="text/javascript" src="/javascript/disc.js"><
 //Checking ID
 $query = 'SELECT * FROM `discs` AS `d`,`systems` AS `s` WHERE `s`.`s_id`=`d`.`d_media` AND `d`.`d_id`='.intval($_GET['id']);
 if (!defined('ADMIN') && !defined('MODERATOR')) $query .= ' AND `s`.`s_public`=1';
-if (!in_array($psxdb_user[id], $psxdb_config['red_users'])) $query .= ' AND `d`.`d_status`>=4';
+if (!in_array($psxdb_user['id'], $psxdb_config['red_users'])) $query .= ' AND `d`.`d_status`>=4';
 $query = $mysqli->query($query);
 if ($query->num_rows != 1)
 	error('Disc with ID "'.htmlspecialchars($_GET['id']).'" doesn\'t exist.');
@@ -19,6 +19,20 @@ $disc = $query->fetch_array();
 /**************/
 /* Disc tools */
 /**************/
+
+function get_disc_title($disc) {
+	$title = htmlspecialchars(title($disc['d_title']));
+	if ($disc['d_title_foreign'] != '')
+		$title .= ' &bull; '.htmlspecialchars(title($disc['d_title_foreign']));
+	if (isset($disc['d_number']) || $disc['d_label'] != '') {
+		$title .= '<br />';
+		if (isset($disc['d_number']))
+			$title .= 'Disc '.$disc['d_number'].'';
+		if ($disc['d_label'] != '')
+			$title .= ' ('.htmlspecialchars(title($disc['d_label'])).')';
+	}
+	return $title;
+}
 
 switch ($_GET['action']) {
 	case 'cue':
@@ -151,6 +165,36 @@ switch ($_GET['action']) {
 		display();
 		break;
 		
+	case 'changes':
+		if (!defined('LOGGED')) {
+			redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
+		}
+		$changes = $mysqli->query('SELECT rss.*,users.username FROM rss,users WHERE users.id=rss.u_id AND d_id='.$disc['d_id'].' ORDER BY r_id DESC');
+		echo '<h1><a href="/disc/'.$disc['d_id'].'">';
+		
+		echo htmlspecialchars(title($disc['d_title']));
+			if (isset($disc['d_number']))
+				echo ' (Disc '.$disc['d_number'].')';
+			if ($disc['d_label'] != '')
+				echo ' ('.htmlspecialchars(title($disc['d_label'])).')';
+		echo '</a>: ';
+		if ($changes->num_rows == 0)
+		{
+			echo 'No changes</h1>';
+			display();
+		}
+		echo 'Changes</h1><ul class="changes">';
+		while ($change = $changes->fetch_array()) {
+			echo '<li><dl>';
+			echo '<dt>Date:</dt><dd>'.format_datetime($change['r_datetime_new'], 'M d Y, H:i').'</dd>';
+			echo '<dt>User:</dt><dd>'.htmlspecialchars($change['username']).'</dd>';
+			echo '<dt>Changes:</dt><dd>'.$change['r_contents'].'</dd>';
+			echo '</dl></li>';
+		}
+		echo '</ul>';
+		$psxdb['title'] = get_disc_title($disc).': Changes';
+		display();
+		break;
 }
 
 /*************/
@@ -194,12 +238,16 @@ if ($disc['d_libcrypt'] != NULL) {
 }
 if (defined('LOGGED')) {
 	$mygamequery = $mysqli->query('SELECT `du`.* FROM `du` WHERE `du`.`d_id`='.intval($_GET['id']).' AND `du`.`u_id`='.$psxdb_user['id']);
-	if ($mygamequery->num_rows) {
+	if ($mygamequery->num_rows)
+	{
 		$mygame = $mygamequery->fetch_array();
 		if ($mygame['du_status'] == 0 || $mygame['du_status'] == 2) $tools[] = '<a id="mydisctext" href="javascript:ChangeDiscStatus('.$disc['d_id'].');">Remove from my discs</a>';
 		else $tools[] = '<a id="mydisctext" href="javascript:ChangeDiscStatus('.$disc['d_id'].');">Add to my discs</a>';
 	} else
+	{
 		$tools[] = '<a id="mydisctext" href="javascript:ChangeDiscStatus('.$disc['d_id'].');">Add to my discs</a>';
+	}
+	$tools[] = '<a href="/disc/'.$disc['d_id'].'/changes/">View edit history</a>';
 }
 
 //if ($rels = relationships(0, $_GET['id'])) {
@@ -627,16 +675,7 @@ if ($disc['d_media'] == 1 && $disc['d_libcrypt'] != '') {
 }
 
 /// Title
-$psxdb['title'] = htmlspecialchars(title($disc['d_title']));
-if ($disc['d_title_foreign'] != '')
-	$psxdb['title'] .= ' &bull; '.htmlspecialchars(title($disc['d_title_foreign']));
-if (isset($disc['d_number']) || $disc['d_label'] != '') {
-	$psxdb['title'] .= '<br />';
-	if (isset($disc['d_number']))
-		$psxdb['title'] .= 'Disc '.$disc['d_number'].'';
-	if ($disc['d_label'] != '')
-		$psxdb['title'] .= ' ('.htmlspecialchars(title($disc['d_label'])).')';
-}
+$psxdb['title'] = get_disc_title($disc);
 
 display();
 

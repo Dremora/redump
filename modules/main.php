@@ -10,7 +10,7 @@ include_once 'parser.php';
 $all_changes = $mysqli->query('SELECT * FROM `rss`,`discs`,`systems` WHERE `r_title` LIKE "%[NEW]%" AND `discs`.`d_id`=`rss`.`d_id` AND `systems`.`s_id`=`discs`.`d_media` ORDER BY `rss`.`r_id` DESC LIMIT 0,10');
 echo '<h2>Recent dumps</h2><div class="textblock"><ul>';
 while ($change = $all_changes->fetch_array()) {
-	echo '<li>'.date('M d Y, H:i', (strtotime($change['r_datetime']) + (($psxdb_user['timezone'] + 1) * 3600))).' '.region($change['d_region']).' <a href="'.$change['r_url'].'">['.$change['s_short'].'] '.htmlspecialchars($change['d_title']);
+	echo '<li>'.format_datetime($change['r_datetime_new'], 'M d Y, H:i').' '.region($change['d_region']).' <a href="'.$change['r_url'].'">['.$change['s_short'].'] '.htmlspecialchars($change['d_title']);
 	if (isset($change['d_number']))
 		echo ' (Disc '.$change['d_number'].')';
 	if ($change['d_label'] != '')

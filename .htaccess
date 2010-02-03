@@ -1,12 +1,15 @@
 RewriteEngine On
 RewriteBase /
+RewriteRule ^discs/?$ index.php?module=discs&%{QUERY_STRING} [L]
+RewriteRule ^changes/?$ index.php?module=changes&%{QUERY_STRING} [L]
 RewriteRule ^xmldats\.zip$ index.php?module=xml-dats [L]
 RewriteRule ^([A-Za-z0-9_-]+)\/?$ index.php?module=$1 [L]
 RewriteRule ^([A-Za-z0-9_-]+)/([1-9][0-9]*)/?$ index.php?module=$1&id=$2 [L]
 RewriteRule ^disc/([1-9][0-9]*)/edit/?$ index.php?module=editdisc&id=$1 [L]
 RewriteRule ^disc/([1-9][0-9]*)(/([A-Za-z0-9_-]+))/?$ index.php?module=disc&id=$1&action=$3 [L]
 RewriteRule ^discs-wip/([1-9][0-9]*)/remove/?$ index.php?module=discs-wip&id=$1&action=remove [L]
-RewriteRule ^discs/(.*)$ index.php?module=discs&string=$1 [L]
+RewriteRule ^discs/(.*)$ index.php?module=discs&string=$1&%{QUERY_STRING} [L]
+RewriteRule ^changes/(.*)$ index.php?module=changes&string=$1&%{QUERY_STRING} [L]
 RewriteRule ^newdisc/([^/]+)(/([1-9][0-9]*))?/?$ index.php?module=newdisc&system=$1 [L]
 RewriteRule ^guide/([A-Za-z0-9_-]+)/?$ index.php?module=guide&article=$1 [L]
 RewriteRule ^cues/old/([A-Za-z0-9_-]+)/? index.php?module=cues&old=1&system=$1 [L]

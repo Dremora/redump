@@ -31,7 +31,8 @@ if (!$systems->num_rows)
 while ($system = $systems->fetch_array())
 {
 	$systems_query[] = 'd.d_media='.$system['s_id'];
-	$title = $system['s_company'].' - '.$system['s_title'];
+	$title = strlen($system['s_company']) != 0 ? $system['s_company'].' - ' : '';
+	$title .= $system['s_title'];
 }
 $systems_query = '('.implode(' OR ', $systems_query).')';
 
