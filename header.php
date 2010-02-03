@@ -93,7 +93,7 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <div class="submenu" id="submenu5" onmouseout="hideelement('5');" onmouseover="showelement('5');">
 <a href="http://forum.<?php echo $_SERVER['HTTP_HOST']; ?>/login.php?action=out&amp;id=<?php echo $psxdb_user['id']; ?>">Log out</a>
 <?php if (defined('ADMIN') || defined('MODERATOR') || defined('DUMPER')): ?>
-<a href="/discs/dumper/<?php echo $psxdb_user['username']; ?>/">My dumps</a>
+<a href="/discs/dumper/<?php echo $psxdb_user['username']; ?>/">My Dumps</a>
 <?php endif; ?>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/mac/">My Apple Macintosh discs</a>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/playdia/">My Bandai Playdia discs</a>
