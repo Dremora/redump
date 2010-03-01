@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 if (!defined('PSXDB')) {
 	header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
@@ -556,18 +556,18 @@ function language($language) {
 // 5. Boolean info
 function booleaninfo($integer) {
 	switch ($integer) {
-		//case 0: return 'Unknown'; break;
-		case 0: return 'No'; break;
-		case 1: return 'Yes'; break;
+		case 0: return 'Unknown'; break;
+		case 1: return 'No'; break;
+		case 2: return 'Yes'; break;
 	}
 }
 
 // 5.1 LibCrypt protection
 function libcrypt($integer) {
 	switch ($integer) {
-		//case 0: return 'Not checked'; break;
-		case 0: return 'No'; break;
-		case 1: return 'Yes'; break;
+		case 0: return 'Not checked'; break;
+		case 1: return 'No'; break;
+		case 2: return 'Yes'; break;
 		//case 3: return 'No (?) <img src="/images/status/yellow.png" title="Verified?" alt="Verified?" />'; break;
 		//case 4: return 'Yes <img src="/images/status/green.png" title="Verified" alt="Verified" />'; break;
 		//case 5: return 'No <img src="/images/status/green.png" title="Verified" alt="Verified" />'; break;
