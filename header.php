@@ -20,6 +20,7 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <a href="/discs/system/cd32/">&bull; Commodore Amiga CD32</a>
 <a href="/discs/system/cdtv/">&bull; Commodore Amiga CDTV</a>
 <a href="/discs/system/dvd-video/">&bull; DVD-Video</a>
+<a href="/discs/system/fmt/">&bull; Fujitsu FM Towns series</a>
 <a href="/discs/system/pc/">&bull; IBM PC compatible</a>
 <a href="/discs/system/xbox/">&bull; Microsoft Xbox</a>
 <a href="/discs/system/pce/">&bull; NEC PC Engine CD - TurboGrafx-CD</a>
@@ -53,6 +54,7 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <a href="/datfile/cd32/">Commodore Amiga CD32 datfile</a>
 <a href="/datfile/cdtv/">Commodore Amiga CDTV datfile</a>
 <a href="/datfile/dvd-video/">DVD-Video datfile</a>
+<a href="/datfile/fmt/">Fujitsu FM Towns series</a>
 <a href="/datfile/pc/">IBM PC compatible datfile</a>
 <a href="/datfile/xbox/">Microsoft Xbox datfile</a>
 <a href="/datfile/pce/">NEC PC Engine CD - TurboGrafx-CD datfile</a>
@@ -102,6 +104,7 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/cd32/">My Commodore Amiga CD32 discs</a>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/cdtv/">My Commodore Amiga CDTV discs</a>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/dvd-video/">My DVD-Video discs</a>
+<a href="/list/have/<?php echo $psxdb_user['username']; ?>/fmt/">My Fujitsu FM Towns series discs</a>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/pc/">My IBM PC compatible discs</a>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/xbox/">My Microsoft Xbox discs</a>
 <a href="/list/have/<?php echo $psxdb_user['username']; ?>/pce/">My NEC PC Engine CD - TurboGrafx-CD discs</a>
