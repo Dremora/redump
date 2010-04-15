@@ -14,6 +14,11 @@ switch ($_GET['console'])
 		$psxdb['title'] = 'Sony PlayStation - BIOS Images (21) (v2007-09-30).dat';
 		downloadText();
 		break;
+	case 'ps2-bios':
+		echo file_get_contents('download/Sony PlayStation 2 - BIOS Images (25) (v2010-04-11).dat');
+		$psxdb['title'] = 'Sony PlayStation 2 - BIOS Images (25) (v2010-04-11).dat';
+		downloadText();
+		break;
 	case '':
 		error('System was not specified.');
 		break;

@@ -1,0 +1,157 @@
+clrmamepro (
+	name "Sony PlayStation 2 - BIOS Images"
+	description "Sony PlayStation 2 - BIOS Images (25)(v2010-04-11)"
+	category Console
+	version 2010-04-11
+	author "Jackal | redump.org"
+)
+
+game (
+	name "ps2-0100j-20000117"
+	description "SCPH-10000 (Version 5.0 01/17/00 T)"
+	rom ( name ps2-0100j-20000117.bin size 4194304 crc b7ef81a9 md5 acf4730ceb38ac9d8c7d8e21f2614600 sha1 aea061e6e263fdcc1c4fdbd68553ef78dae74263 )
+)
+
+game (
+	name "ps2-0150j-20010118"
+	description "SCPH-30000 (Version 5.0 01/18/01 J)"
+	rom ( name ps2-0150j-20010118.bin size 4194304 crc 4fc3b495 md5 815ac991d8bc3b364696bead3457de7d sha1 d6f365a0f07cd04ed28108e6ec5076e2f81e5f72 )
+)
+
+game (
+	name "ps2-0120e-20000902"
+	description "SCPH-30003 (Version 5.0 09/02/00 E)"
+	rom ( name ps2-0120e-20000902.bin size 4194304 crc 7b08c33b md5 b7fa11e87d51752a98b38e3e691cbf17 sha1 274c05fec654913a3f698d4b0d592085866a2cbd )
+)
+
+game (
+	name "ps2-0160e-20011004"
+	description "SCPH-30004R (Version 5.0 10/04/01 E)"
+	rom ( name ps2-0160e-20011004.bin size 4194304 crc 9386a740 md5 28922c703cc7d2cf856f177f2985b3a9 sha1 8fa040852d4b8688f0c84bcfffc65eb208f2b432 )
+)
+
+game (
+	name "ps2-0160a-20020207"
+	description "SCPH-39001 (Version 5.0 02/07/02 A)"
+	rom ( name ps2-0160a-20020207.bin size 4194304 crc a19e0bf5 md5 d5ce2c7d119f563ce04bc04dbc3a323e sha1 f9a5d629a036b99128f7cb530c6e3ca016e9c8b7 )
+)
+
+game (
+	name "ps2-0160e-20020319"
+	description "SCPH-39004 (Version 5.0 03/19/02 E)"
+	rom ( name ps2-0160e-20020319.bin size 4194304 crc 87f0f277 md5 b5b6c5cb8a6e2704938a27d03b7d3bbc sha1 bc82a55a1ed1179caf0d1d4b80111834057673e6 )
+)
+
+game (
+	name "ps2-0170j-20030206"
+	description "SCPH-50000 (Version 5.0 02/06/03 J)"
+	rom ( name ps2-0170j-20030206.bin size 4194304 crc 9457f64e md5 312ad4816c232a9606e56f946bc0678a sha1 d812ac65c357d392396ca9edee812dc41bed8bde )
+)
+
+game (
+	name "ps2-0170e-20030227"
+	description "SCPH-50003 (Version 5.0 02/27/03 E)"
+	rom ( name ps2-0170e-20030227.bin size 4194304 crc 51b5fb8b md5 6e69920fa6eef8522a1d688a11e41bc6 sha1 ad15bd7eabd5bd81ba011516a5be44947d6641aa )
+)
+
+game (
+	name "ps2-0190e-20030623"
+	description "SCPH-50004 (Version 5.0 06/23/03 E)"
+	rom ( name ps2-0190e-20030623.bin size 4194304 crc bfe41270 md5 800bd44bb2cde299dad158a6027896a2 sha1 dbd7f4d41d54e4f0bf3c4042bb42a42d5d4ef95e )
+)
+
+game (
+	name "ps2-0190h-20030623"
+	description "SCPH-50006 (Version 5.0 06/23/03 J)"
+	rom ( name ps2-0190h-20030623.bin size 4194304 crc 36b0580c md5 07b562a3f0c4b9a55834df9bbc9bd0c3 sha1 3e18fefb5b5a59046baf25a3f13da1e3a40b92be )
+)
+
+game (
+	name "ps2-0190c-20030623"
+	description "SCPH-50009 (Version 5.0 06/23/03 J)"
+	rom ( name ps2-0190c-20030623.bin size 4194304 crc 40d6c676 md5 74c099882c5134e3735a91efc260046f sha1 b7548a92bd2caa9d60cbc7f79573a5d510f88012 )
+)
+
+game (
+	name "ps2-0200j-20040614"
+	description "SCPH-70000 (Version 5.0 06/14/04 J)"
+	rom ( name ps2-0200j-20040614.bin size 4194304 crc 2f314730 md5 0eee5d1c779aa50e94edd168b4ebf42e sha1 224ab5704ab719edeb05ca1d835812252c97c1b3 )
+)
+
+game (
+	name "ps2-0200e-20040614"
+	description "SCPH-70004 (Version 5.0 06/14/04 E)"
+	rom ( name ps2-0200e-20040614.bin size 4194304 crc 6f8e3c29 md5 dc752f160044f2ed5fc1f4964db2a095 sha1 434bc0b4eb4827da0773ec0795aadc5162569a07 )
+)
+
+game (
+	name "ps2-0200h-20040614"
+	description "SCPH-70006 (Version 5.0 06/14/04 J)"
+	rom ( name ps2-0200h-20040614.bin size 4194304 crc b57201bf md5 3e3e030c0f600442fa05b94f87a1e238 sha1 7f8e812cab7c7393c85eac6c42661e1fd0a642df )
+)
+
+game (
+	name "ps2-0200a-20040614"
+	description "SCPH-70012 (Version 5.0 06/14/04 A)"
+	rom ( name ps2-0200a-20040614.bin size 4194304 crc 7ebd68de md5 d333558cc14561c1fdc334c75d5f37b7 sha1 7a62e5f48603582707e9898eb055ea3eaee50d4c )
+)
+
+game (
+	name "ps2-0220e-20050620"
+	description "SCPH-75008 (Version 5.0 06/20/05 E)"
+	rom ( name ps2-0220e-20050620.bin size 4194304 crc e2862e39 md5 573f7d4a430c32b3cc0fd0c41e104bbd sha1 929a85e974faf4b40d0a7785023b758402c43bd9 )
+)
+
+game (
+	name "ps2-0220a-20060210"
+	description "SCPH-77001 (Version 5.0 02/10/06 A)"
+	rom ( name ps2-0220a-20060210.bin size 4194304 crc 1279fce9 md5 cb801b7920a7d536ba07b6534d2433ca sha1 92e488d5b2705e4cca83d4d1efbc421012faf83e )
+)
+
+game (
+	name "ps2-0220e-20060210"
+	description "SCPH-77004/SCPH-77008 (Version 5.0 02/10/06 E)"
+	rom ( name ps2-0220e-20060210.bin size 4194304 crc 23fa7baa md5 af60e6d1a939019d55e5b330d24b1c25 sha1 28ad756d0cfd1e7b2e2de3de5d9e14207ee89761 )
+)
+
+game (
+	name "ps2-0230a-20080220"
+	description "SCPH-90001 (Version 5.0 02/20/08 A)"
+	rom ( name ps2-0230a-20080220.bin size 4194304 crc 286897c2 md5 21038400dc633070a78ad53090c53017 sha1 f9229fe159d0353b9f0632f3fdc66819c9030458 )
+)
+
+game (
+	name "ps2-0220e-20060905"
+	description "SCPH-90002 (Version 5.0 09/05/06 E)"
+	rom ( name ps2-0220e-20060905.bin size 4194304 crc 2d946dbf md5 80bbb237a6af9c611df43b16b930b683 sha1 da5aacead2fb55807d6d4e70b1f10f4fdcfd3281 )
+)
+
+game (
+	name "ps2-0220j-20060905"
+	description "SCPH-90006 (Version 5.0 09/05/06 J)"
+	rom ( name ps2-0220j-20060905.bin size 4194304 crc 493c1e58 md5 e5fc892f8a6c86bea656f16bed89fcc5 sha1 d9a7537fa463fcdd3e270af14a93731736cafc4a )
+)
+
+game (
+	name "ps2-dvd-213e"
+	description "DVD Player (Version 2.13E)"
+	rom ( name ps2-dvd-213e.bin size 2097152 crc 71026453 md5 6bdb45a952f697f367cd1646cdf09235 sha1 010ab71354a1ae5065640a2cb85e829ff8141a66 )
+)
+
+game (
+	name "ps2-dvd-300e"
+	description "DVD Player (Version 3.00E)"
+	rom ( name ps2-dvd-300e.bin size 4194304 crc 7a3208ce md5 f40466438d83a02c1eecba3efff20b6a sha1 bbfdc1a2df333885f62cca4e8920228e40e94e29 )
+)
+
+game (
+	name "ps2-dvd-310"
+	description "DVD Player (Version 3.10)"
+	rom ( name ps2-dvd-310.bin size 4194304 crc df8f104f md5 a2b55c44a3c3eec0abe5647cfb6a6493 sha1 cd8b548d6db7f7bdd4a0d90e21081520e7e05a40 )
+)
+
+game (
+	name "ps2-dvd-311"
+	description "DVD Player (Version 3.11)"
+	rom ( name ps2-dvd-311.bin size 4194304 crc cecc5e2d md5 79b4880006769a1af9b0a6c7302cc18d sha1 747e36b086aceceb300c72c0d1bbab38e2920e63 )
+)

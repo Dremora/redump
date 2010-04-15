@@ -68,6 +68,7 @@ echo '<div id="header"><img src="/images/logo-left.png" style="float: left;" alt
 <a href="/datfile/psx/">Sony PlayStation datfile</a>
 <a href="/datfile/psx-bios/">Sony PlayStation BIOS datfile</a>
 <a href="/datfile/ps2/">Sony PlayStation 2 datfile</a>
+<a href="/datfile/ps2-bios/">Sony PlayStation 2 BIOS datfile</a>
 <a href="/datfile/psp/">Sony PlayStation Portable datfile</a>
 <a href="/cues/">Cuesheets archive</a>
 <a href="/gdi/">GDI archive</a>
