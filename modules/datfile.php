@@ -15,8 +15,8 @@ switch ($_GET['console'])
 		downloadText();
 		break;
 	case 'ps2-bios':
-		echo file_get_contents('download/Sony PlayStation 2 - BIOS Images (25) (v2010-04-11).dat');
-		$psxdb['title'] = 'Sony PlayStation 2 - BIOS Images (25) (v2010-04-11).dat';
+		echo file_get_contents('download/Sony PlayStation 2 - BIOS Images (27) (v2010-04-23).dat');
+		$psxdb['title'] = 'Sony PlayStation 2 - BIOS Images (27) (v2010-04-23).dat';
 		downloadText();
 		break;
 	case '':

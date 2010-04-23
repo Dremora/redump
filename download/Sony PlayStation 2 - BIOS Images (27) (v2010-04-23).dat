@@ -1,8 +1,8 @@
 clrmamepro (
 	name "Sony PlayStation 2 - BIOS Images"
-	description "Sony PlayStation 2 - BIOS Images (25)(v2010-04-11)"
+	description "Sony PlayStation 2 - BIOS Images (27)(v2010-04-23)"
 	category Console
-	version 2010-04-11
+	version 2010-04-23
 	author "Jackal | redump.org"
 )
 
@@ -22,6 +22,12 @@ game (
 	name "ps2-0120e-20000902"
 	description "SCPH-30003 (Version 5.0 09/02/00 E)"
 	rom ( name ps2-0120e-20000902.bin size 4194304 crc 7b08c33b md5 b7fa11e87d51752a98b38e3e691cbf17 sha1 274c05fec654913a3f698d4b0d592085866a2cbd )
+)
+
+game (
+	name "ps2-0160e-20010704"
+	description "SCPH-30004R (Version 5.0 07/04/01 E)"
+	rom ( name ps2-0160e-20010704.bin size 4194304 crc f1ac735f md5 491209dd815ceee9de02dbbc408c06d6 sha1 3cbd048e437c785b5a05a0feced00117a8a42545 )
 )
 
 game (
@@ -130,6 +136,12 @@ game (
 	name "ps2-0220j-20060905"
 	description "SCPH-90006 (Version 5.0 09/05/06 J)"
 	rom ( name ps2-0220j-20060905.bin size 4194304 crc 493c1e58 md5 e5fc892f8a6c86bea656f16bed89fcc5 sha1 d9a7537fa463fcdd3e270af14a93731736cafc4a )
+)
+
+game (
+	name "ps2-dvd-210e"
+	description "DVD Player (Version 2.10E)"
+	rom ( name ps2-dvd-210e.bin size 2097152 crc 8741cc92 md5 d5118e3979eb2a3814ebbfa32825e7b0 sha1 7625f77742dee6745e3be8f89cbd59a1143db104 )
 )
 
 game (
