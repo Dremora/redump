@@ -1,5 +1,6 @@
 syntax: glob
 config/database.yml
+config/initializers/secret_token.rb
 log/
 tmp/
 db/*.sqlite3
