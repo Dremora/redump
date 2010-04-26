@@ -1,0 +1,64 @@
+<%= form_for(@disc) do |f| %>
+  <% if @disc.errors.any? %>
+  <div id="errorExplanation">
+    <h2><%= pluralize(@disc.errors.count, "error") %> prohibited this disc from being saved:</h2>
+    <ul>
+    <% @disc.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :comments %><br />
+    <%= f.text_area :comments %>
+  </div>
+  <div class="field">
+    <%= f.label :internal_date %><br />
+    <%= f.text_field :internal_date %>
+  </div>
+  <div class="field">
+    <%= f.label :internal_serial %><br />
+    <%= f.text_field :internal_serial %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :subtitle %><br />
+    <%= f.text_field :subtitle %>
+  </div>
+  <div class="field">
+    <%= f.label :scene_filename %><br />
+    <%= f.text_field :scene_filename %>
+  </div>
+  <div class="field">
+    <%= f.label :filename %><br />
+    <%= f.text_field :filename %>
+  </div>
+  <div class="field">
+    <%= f.label :size %><br />
+    <%= f.text_field :size %>
+  </div>
+  <div class="field">
+    <%= f.label :crc32 %><br />
+    <%= f.text_field :crc32 %>
+  </div>
+  <div class="field">
+    <%= f.label :md5 %><br />
+    <%= f.text_field :md5 %>
+  </div>
+  <div class="field">
+    <%= f.label :sha1 %><br />
+    <%= f.text_field :sha1 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

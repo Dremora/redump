@@ -1,0 +1,23 @@
+<h1>Listing discs</h1>
+
+<%= link_to 'New disc', new_disc_path %>
+
+<% if @discs.empty? %>
+<p>No discs found.</p>
+<% else %>  
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Status</th>
+    <th>Serial</th>
+  </tr>
+
+<% @discs.each do |disc| %>
+  <tr>
+    <td><%= link_to disc.title, disc %></td>
+    <td><%= status_image disc %></td>
+    <td><%= disc.internal_serial %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>

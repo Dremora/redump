@@ -1,0 +1,33 @@
+<p class="notice"><%= notice %></p>
+
+<ul>
+  <li><%= link_to 'Edit', edit_disc_path(@disc) %></li>
+  <li><%= link_to 'Delete', @disc, :confirm => 'Are you sure?', :method => :delete %></li>
+</ul>
+
+<dl>
+  <dt>Title:</dt>
+  <dd><%= @disc.title %></dd>
+  <dt>Subtitle:</dt>
+  <dd><%= @disc.subtitle %></dd>
+  <dt>Internal serial:</dt>
+  <dd><%= @disc.internal_serial %></dd>
+  <dt>Internal date:</dt>
+  <dd><%= @disc.internal_date %></dd>
+  <dt>Status:</dt>
+  <dd><%= status_image_text @disc %></dd>
+  <dt>Filename:</dt>
+  <dd><%= @disc.filename %></dd>
+  <dt>Scene filename:</dt>
+  <dd><%= @disc.scene_filename %></dd>
+  <dt>Comments:</dt>
+  <dd><%= @disc.comments %></dd>
+  <dt>Size:</dt>
+  <dd><%= @disc.size %></dd>
+  <dt>CRC-32:</dt>
+  <dd><%= @disc.crc32 %></dd>
+  <dt>MD5:</dt>
+  <dd><%= @disc.md5 %></dd>
+  <dt>SHA-1:</dt>
+  <dd><%= @disc.sha1 %></dd>
+</dl>
