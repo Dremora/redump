@@ -9,11 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100426145252) do
+ActiveRecord::Schema.define(:version => 20100427022443) do
 
   create_table "discs", :force => true do |t|
     t.text     "comments"
-    t.date     "internal_date"
+    t.string   "internal_date",   :limit => 10
     t.string   "internal_serial"
     t.integer  "status",          :limit => 1
     t.string   "title"
