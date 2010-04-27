@@ -1,6 +1,6 @@
 module DiscsHelper
   def status(disc)
-    Disc.statuses[disc.status].to_s.gsub('_', ' ').capitalize
+    Disc.statuses[disc.status].to_s.humanize
   end
   
   def status_image(disc)
