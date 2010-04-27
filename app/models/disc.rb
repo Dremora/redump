@@ -23,4 +23,13 @@ class Disc < ActiveRecord::Base
   validates_format_of :crc32, :with => /\A([0-9A-Fa-f]{8})?\Z/
   validates_format_of :md5, :with => /\A([0-9A-Fa-f]{32})?\Z/
   validates_format_of :sha1, :with => /\A([0-9A-Fa-f]{40})?\Z/
+  
+  after_validation :checksums_downcase
+  
+  protected
+  def checksums_downcase
+    self.crc32.downcase!
+    self.md5.downcase!
+    self.sha1.downcase!
+  end
 end
