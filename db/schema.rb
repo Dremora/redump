@@ -9,21 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100427022443) do
+ActiveRecord::Schema.define(:version => 20100501131638) do
 
   create_table "discs", :force => true do |t|
-    t.text     "comments"
-    t.string   "internal_date",   :limit => 10
-    t.string   "internal_serial"
-    t.integer  "status",          :limit => 1
-    t.string   "title"
-    t.string   "subtitle"
-    t.string   "scene_filename"
-    t.string   "filename"
+    t.text     "comments",                      :null => false
+    t.string   "internal_date",   :limit => 10, :null => false
+    t.string   "internal_serial",               :null => false
+    t.integer  "status",          :limit => 1,  :null => false
+    t.string   "title",                         :null => false
+    t.string   "subtitle",                      :null => false
+    t.string   "scene_filename",                :null => false
+    t.string   "filename",                      :null => false
     t.integer  "size"
-    t.string   "crc32",           :limit => 8
-    t.string   "md5",             :limit => 32
-    t.string   "sha1",            :limit => 40
+    t.string   "crc32",           :limit => 8,  :null => false
+    t.string   "md5",             :limit => 32, :null => false
+    t.string   "sha1",            :limit => 40, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
