@@ -4,7 +4,7 @@ class MediaType < ActiveRecord::Base
   has_many :childs, :class_name => "MediaType", :foreign_key => "parent_id"
   belongs_to :parent, :class_name => "MediaType"
   
-  attr_protected :created_at, :updated_at
+  attr_accessible :title, :abbreviation, :parent_id
   
   validates_length_of :title, :in => 1..255
   validates_length_of :abbreviation, :maximum => 255
