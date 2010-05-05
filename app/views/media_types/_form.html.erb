@@ -1,7 +1,7 @@
 <%= form_for(@media_type) do |f| %>
   <% if @media_type.errors.any? %>
   <div id="errorExplanation">
-    <h2><%= pluralize(@media_type.errors.count, "error") %> prohibited this media_type from being saved:</h2>
+    <h2><%= pluralize(@media_type.errors.count, "error") %> prohibited this Media type from being saved:</h2>
     <ul>
     <% @media_type.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
