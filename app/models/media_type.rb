@@ -8,6 +8,9 @@ class MediaType < ActiveRecord::Base
   
   validates_length_of :title, :in => 1..255
   validates_length_of :abbreviation, :maximum => 255
+  validate :parent_id do
+    errors.add(:parent_id, "doesn't exist") if !self.parent_id.nil? and self.parent.nil?
+  end
   
   before_save do
     self.abbreviation = self.abbreviation.to_s
