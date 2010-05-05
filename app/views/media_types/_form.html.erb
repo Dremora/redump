@@ -24,7 +24,7 @@
   </div>
   <div class="field">
     <%= f.label :parent_id %><br />
-    <%= f.text_field :parent_id %>
+    <%= f.select :parent_id, parent_options_tree(@media_types, @media_type) %>
   </div>
   <div class="actions">
     <%= f.submit %>

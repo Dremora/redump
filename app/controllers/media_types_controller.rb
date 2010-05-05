@@ -9,11 +9,13 @@ class MediaTypesController < ApplicationController
 
   def new
     @media_type = MediaType.new
+    @media_types = MediaType.tree
     @property_groups = PropertyGroup.all
   end
 
   def edit
     @media_type = MediaType.find(params[:id])
+    @media_types = MediaType.tree
   end
 
   def create
