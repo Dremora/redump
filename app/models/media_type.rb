@@ -5,7 +5,7 @@ class MediaType < ActiveRecord::Base
   belongs_to :parent, :class_name => "MediaType"
 
   @@formats = ["CD", "DVD"]
-    
+  
   attr_protected :created_at, :updated_at
   
   validates_inclusion_of :format, :in => @@formats
@@ -16,17 +16,11 @@ class MediaType < ActiveRecord::Base
     self.abbreviation = self.abbreviation.to_s
   end
   
-  # make protected
-  def self.tree_branch(elements, id)
-    new_elements = elements.select { |element| element.parent_id == id }
-    branch = Hash.new
-    new_elements.each do |element|
-      branch[element] = tree_branch(elements, element.id)
+  def self.tree(elements = self.all, root = nil)
+    tree = {}
+    elements.select { |element| element.parent_id == root }.each do |element|
+      tree[element] = tree(elements, element.id)
     end
-    branch
-  end
-  
-  def self.tree
-    elements = tree_branch(self.all, nil)
+    tree
   end
 end
