@@ -8,28 +8,46 @@
 <dl>
   <dt>Title:</dt>
   <dd><%= @disc.title %></dd>
+  <% unless @disc.subtitle.blank? %>
   <dt>Subtitle:</dt>
-  <dd><%= @disc.subtitle %></dd>
+  <dd><%= @disc.subtitle %></dd>  
+  <% end %>
+  <% unless @disc.internal_serial.blank? %>
   <dt>Internal serial:</dt>
   <dd><%= @disc.internal_serial %></dd>
+  <% end %>
+  <% unless @disc.internal_serial.blank? %>
   <dt>Internal date:</dt>
   <dd><%= @disc.internal_date %></dd>
+  <% end %>
   <dt>Status:</dt>
   <dd><%= status_image_text @disc %></dd>
   <dt>Filename:</dt>
-  <dd><%= @disc.filename %></dd>
+  <dd><%= @disc.scene_filename %></dd>
+  <% unless @disc.crc32.blank? %>
   <dt>Scene filename:</dt>
   <dd><%= @disc.scene_filename %></dd>
+  <% end %>
+  <% unless @disc.comments.blank? %>
   <dt>Comments:</dt>
   <dd><%= @disc.comments %></dd>
+  <% end %>
+  <% unless @disc.size.blank? %>
   <dt>Size:</dt>
   <dd><%= @disc.size %></dd>
+  <% end %>
+  <% unless @disc.crc32.blank? %>
   <dt>CRC-32:</dt>
   <dd><%= @disc.crc32 %></dd>
+  <% end %>
+  <% unless @disc.md5.blank? %>
   <dt>MD5:</dt>
   <dd><%= @disc.md5 %></dd>
+  <% end %>
+  <% unless @disc.sha1.blank? %>
   <dt>SHA-1:</dt>
   <dd><%= @disc.sha1 %></dd>
+  <% end %>
   <dt>Created:</dt>
   <dd><%= @disc.created_at %></dd>
   <dt>Updated:</dt>
