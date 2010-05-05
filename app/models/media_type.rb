@@ -21,7 +21,6 @@ class MediaType < ActiveRecord::Base
     new_elements = elements.select { |element| element.parent_id == id }
     branch = Hash.new
     new_elements.each do |element|
-      logger.debug element
       branch[element] = tree_branch(elements, element.id)
     end
     branch
