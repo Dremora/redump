@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100503182037) do
+ActiveRecord::Schema.define(:version => 20100505124020) do
 
   create_table "discs", :force => true do |t|
     t.text     "comments",                      :null => false
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(:version => 20100503182037) do
   create_table "media_types", :force => true do |t|
     t.string   "title",        :null => false
     t.string   "abbreviation", :null => false
-    t.string   "format",       :null => false
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
