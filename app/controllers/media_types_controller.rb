@@ -16,6 +16,7 @@ class MediaTypesController < ApplicationController
   def edit
     @media_type = MediaType.find(params[:id])
     @media_types = MediaType.tree
+    @property_groups = PropertyGroup.all
   end
 
   def create
@@ -24,6 +25,8 @@ class MediaTypesController < ApplicationController
     if @media_type.save
       redirect_to(@media_type, :notice => 'Media type was successfully created.')
     else
+      @media_types = MediaType.tree
+      @property_groups = PropertyGroup.all
       render :action => "new"
     end
   end
@@ -34,6 +37,8 @@ class MediaTypesController < ApplicationController
     if @media_type.update_attributes(params[:media_type])
       redirect_to(@media_type, :notice => 'Media type was successfully updated.')
     else
+      @media_types = MediaType.tree
+      @property_groups = PropertyGroup.all
       render :action => "edit"
     end
   end
