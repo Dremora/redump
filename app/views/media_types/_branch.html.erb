@@ -1,0 +1,6 @@
+<ul>
+<% branch.each do |k, v| %>
+<li><%= link_to k.title, k %></li>
+<%= render :partial => "branch", :locals => { :branch => v } unless v.blank? %>
+<% end %>
+</ul>

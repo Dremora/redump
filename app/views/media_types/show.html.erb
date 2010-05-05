@@ -1,0 +1,33 @@
+<p class="notice"><%= notice %></p>
+
+<dl>
+	<dt>Title:</dt>
+	<dd><%= @media_type.title %></dd>
+	
+	<% unless @media_type.abbreviation.blank? %>
+	<dt>Abbreviation:</dt>
+	<dd><%= @media_type.abbreviation %></dd>
+	<% end %>
+	
+	<dt>Format:</dt>
+	<dd><%= @media_type.format %></dd>
+
+	<% unless @media_type.parent_id.nil? %>
+	<dt>Parent:</dt>
+	<dd><%= link_to @media_type.parent.title, @media_type.parent %></dd>
+	<% end %>
+
+	<% unless @media_type.childs.blank? %>
+	<dt>Childs:</dt>
+	<dd>
+		<ul>
+			<% @media_type.childs.each do |child| %>
+			<li><%= link_to child.title, child %></li>
+			<% end %>
+		</ul>
+	</dd>
+	<% end %>
+</dl>
+
+<%= link_to 'Edit', edit_media_type_path(@media_type) %> |
+<%= link_to 'Back', media_types_path %>

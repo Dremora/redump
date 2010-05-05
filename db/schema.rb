@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100501131638) do
+ActiveRecord::Schema.define(:version => 20100503182037) do
 
   create_table "discs", :force => true do |t|
     t.text     "comments",                      :null => false
@@ -24,6 +24,44 @@ ActiveRecord::Schema.define(:version => 20100501131638) do
     t.string   "crc32",           :limit => 8,  :null => false
     t.string   "md5",             :limit => 32, :null => false
     t.string   "sha1",            :limit => 40, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "media_types", :force => true do |t|
+    t.string   "title",        :null => false
+    t.string   "abbreviation", :null => false
+    t.string   "format",       :null => false
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "media_types_property_groups", :id => false, :force => true do |t|
+    t.integer  "media_type_id",     :null => false
+    t.integer  "property_group_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "properties", :force => true do |t|
+    t.string   "name",              :null => false
+    t.string   "type",              :null => false
+    t.integer  "property_group_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "property_groups", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "property_values", :force => true do |t|
+    t.text     "value",       :null => false
+    t.integer  "property_id", :null => false
+    t.integer  "disc_id",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

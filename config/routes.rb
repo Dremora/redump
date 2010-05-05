@@ -1,4 +1,6 @@
 Redump::Application.routes.draw do |map|
+  resources :media_types
+
   resources :discs
 
   # The priority is based upon order of creation:

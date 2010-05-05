@@ -1,4 +1,7 @@
 class Disc < ActiveRecord::Base
+  has_many :property_values
+  belongs_to :media_type
+  
   @@statuses = {
     1 => :not_dumped,
     2 => :dumped,
