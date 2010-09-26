@@ -16,69 +16,9 @@ if (defined('LOGGED')) {
 
 if (!in_array($psxdb_user[id], $psxdb_config['red_users'])) $queryadd = ' AND `d`.`d_status`>=4';
 
-// Discs with unknown EDC status
-$discs = $mysqli->query('SELECT * FROM `discs` AS `d`,`systems` AS `s` WHERE `s`.`s_id`=`d`.`d_media` AND `d`.`d_media`=1 AND `d`.`d_edc`=0'.$queryadd.' ORDER BY `d`.`d_title`,`d`.`d_region`');
-echo '<h2>PSX CD with unknown EDC status ('.$discs->num_rows.')</h2>';
-echo '<div class="textblock"><p>';
-while ($disc = $discs->fetch_array()) {
-	if (defined('LOGGED')) {
-		if (in_array($disc['d_id'], $mydiscsarray))
-			echo status(5).' ';
-		else
-			echo status(2).' ';
-	} 
-	echo '<a href="/disc/'.$disc['d_id'].'/">'.htmlspecialchars(discfilename($disc)).'</a><br />';
-}
-echo "</p></div>";
-
-// Discs with unknown LibCrypt protection status
-$discs = $mysqli->query('SELECT * FROM `discs` AS `d` WHERE `d`.`d_media`=1 AND `d`.`d_protection_l`=0'.$queryadd.' ORDER BY `d`.`d_title`,`d`.`d_region`');
-echo '<h2>PSX CD with unknown LibCrypt protection status ('.$discs->num_rows.')</h2>';
-echo '<div class="textblock"><p>';
-while ($disc = $discs->fetch_array()) {
-	if (defined('LOGGED')) {
-		if (in_array($disc['d_id'], $mydiscsarray))
-			echo status(5).' ';
-		else
-			echo status(2).' ';
-	} 
-	echo '<a href="/disc/'.$disc['d_id'].'/">'.htmlspecialchars(discfilename($disc)).'</a><br />';
-}
-echo "</p></div>";
-
 // Discs with LibCrypt protection
 $discs = $mysqli->query('SELECT * FROM `discs` AS `d` WHERE `d`.`d_media`=1 AND `d`.`d_protection_l`=2'.$queryadd.' ORDER BY `d`.`d_title`,`d`.`d_region`');
 echo '<h2>PSX CD with LibCrypt protection ('.$discs->num_rows.')</h2>';
-echo '<div class="textblock"><p>';
-while ($disc = $discs->fetch_array()) {
-	if (defined('LOGGED')) {
-		if (in_array($disc['d_id'], $mydiscsarray))
-			echo status(5).' ';
-		else
-			echo status(2).' ';
-	} 
-	echo '<a href="/disc/'.$disc['d_id'].'/">'.htmlspecialchars(discfilename($disc)).'</a><br />';
-}
-echo "</p></div>";
-
-// Discs with LibCrypt protection (verified)
-//$discs = $mysqli->query('SELECT * FROM `discs` AS `d` WHERE `d`.`d_media`=1 AND `d`.`d_protection_l`=4'.$queryadd.' ORDER BY `d`.`d_title`,`d`.`d_region`');
-//echo '<h2>PSX CD with LibCrypt protection (verified) ('.$discs->num_rows.')</h2>';
-//echo '<div class="textblock"><p>';
-//while ($disc = $discs->fetch_array()) {
-//	if (defined('LOGGED')) {
-//		if (in_array($disc['d_id'], $mydiscsarray))
-//			echo status(5).' ';
-//		else
-//			echo status(2).' ';
-//	} 
-//	echo '<a href="/disc/'.$disc['d_id'].'/">'.htmlspecialchars(discfilename($disc)).'</a><br />';
-//}
-//echo "</p></div>";
-
-// Discs with unknown anti-modchip protection status
-$discs = $mysqli->query('SELECT * FROM `discs` AS `d` WHERE `d`.`d_media`=1 AND `d`.`d_protection_a`=0'.$queryadd.' ORDER BY `d`.`d_title`,`d`.`d_region`');
-echo '<h2>PSX CD with unknown anti-modchip protection status ('.$discs->num_rows.')</h2>';
 echo '<div class="textblock"><p>';
 while ($disc = $discs->fetch_array()) {
 	if (defined('LOGGED')) {
