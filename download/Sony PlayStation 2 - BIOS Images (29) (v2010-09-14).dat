@@ -1,8 +1,8 @@
 clrmamepro (
 	name "Sony PlayStation 2 - BIOS Images"
-	description "Sony PlayStation 2 - BIOS Images (27)(v2010-04-23)"
+	description "Sony PlayStation 2 - BIOS Images (29) (v2010-10-14)"
 	category Console
-	version 2010-04-23
+	version 2010-10-14
 	author "Jackal | redump.org"
 )
 
@@ -25,15 +25,21 @@ game (
 )
 
 game (
+	name "ps2-0150e-20001228"
+	description "SCPH-30003 (Version 5.0 12/28/00 E)"
+	rom ( name ps2-0150e-20001228.bin size 4194304 crc 1559fd43 md5 838544f12de9b0abc90811279ee223c8 sha1 e22ef231faf3661edd92f2ee449a71297c82a092 )
+)
+
+game (
 	name "ps2-0160e-20010704"
-	description "SCPH-30004R (Version 5.0 07/04/01 E)"
+	description "SCPH-30003R/SCPH-30004R (Version 5.0 07/04/01 E)"
 	rom ( name ps2-0160e-20010704.bin size 4194304 crc f1ac735f md5 491209dd815ceee9de02dbbc408c06d6 sha1 3cbd048e437c785b5a05a0feced00117a8a42545 )
 )
 
 game (
 	name "ps2-0160e-20011004"
-	description "SCPH-30004R (Version 5.0 10/04/01 E)"
-	rom ( name ps2-0160e-20011004.bin size 4194304 crc 9386a740 md5 28922c703cc7d2cf856f177f2985b3a9 sha1 8fa040852d4b8688f0c84bcfffc65eb208f2b432 )
+	description "SCPH-30003R (Version 5.0 10/04/01 E)"
+	rom ( name ps2-0160e-20011004.bin size 4194304 crc 82aa5055 md5 8359638e857c8bc18c3c18ac17d9cc3c sha1 ee34c3a87c53c75ca2a37d77b0042ca24d07831f )
 )
 
 game (
@@ -44,8 +50,8 @@ game (
 
 game (
 	name "ps2-0160e-20020319"
-	description "SCPH-39004 (Version 5.0 03/19/02 E)"
-	rom ( name ps2-0160e-20020319.bin size 4194304 crc 87f0f277 md5 b5b6c5cb8a6e2704938a27d03b7d3bbc sha1 bc82a55a1ed1179caf0d1d4b80111834057673e6 )
+	description "SCPH-39003 (Version 5.0 03/19/02 E)"
+	rom ( name ps2-0160e-20020319.bin size 4194304 crc 2fe21e4d md5 0d2228e6fd4fb639c9c39d077a9ec10c sha1 bff2902bd0ce9729a060581132541e9fd1a9fab6 )
 )
 
 game (
@@ -136,6 +142,12 @@ game (
 	name "ps2-0220j-20060905"
 	description "SCPH-90006 (Version 5.0 09/05/06 J)"
 	rom ( name ps2-0220j-20060905.bin size 4194304 crc 493c1e58 md5 e5fc892f8a6c86bea656f16bed89fcc5 sha1 d9a7537fa463fcdd3e270af14a93731736cafc4a )
+)
+
+game (
+	name "ps2-dvd-130e"
+	description "DVD Player (Version 1.30E)"
+	rom ( name ps2-dvd-130e.bin size 2097152 crc 11c77794 md5 a1a15b62cef142575faaea17fb23dbd1 sha1 062f287fb56b18ffbac85ec5f21841b03243ba5a )
 )
 
 game (
