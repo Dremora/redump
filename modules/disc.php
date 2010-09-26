@@ -107,7 +107,7 @@ switch ($_GET['action']) {
 		$array = str_split($disc['d_libcrypt']);
 		for ($i = 0; $i < count($array); $i++) {
 			echo $array[$i];
-		}		
+		}
 		$psxdb['title'] = discfilename($disc).'.lsd';
 		downloadText();
 		break;
@@ -148,7 +148,7 @@ switch ($_GET['action']) {
 		}
 		echo '<div class="error"><b>Are you sure you want to delete this disc?</b> <br /><br /><button onclick="javascript:location.href = \'http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/deleteok\'">Delete</button> <a href="javascript:history.go(-1)">Go back</a></div>';
 		break;
-		
+
 	case 'deleteok':
 		if (!defined('ADMIN') && !defined('MODERATOR')) {
 			redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
@@ -164,14 +164,14 @@ switch ($_GET['action']) {
 		echo '<div style="margin: 5px 15px; border: 1px solid #ccffcc; background: #eeffee; padding: 5px">Disc was successfully deleted.</div>';
 		display();
 		break;
-		
+
 	case 'changes':
 		if (!defined('LOGGED')) {
 			redirect('http://'.$_SERVER['HTTP_HOST'].'/disc/'.$disc['d_id'].'/');
 		}
 		$changes = $mysqli->query('SELECT rss.*,users.username FROM rss,users WHERE users.id=rss.u_id AND d_id='.$disc['d_id'].' ORDER BY r_id DESC');
 		echo '<h1><a href="/disc/'.$disc['d_id'].'">';
-		
+
 		echo htmlspecialchars(title($disc['d_title']));
 			if (isset($disc['d_number']))
 				echo ' (Disc '.$disc['d_number'].')';
@@ -389,12 +389,8 @@ if ($disc['s_media'] == 2) {
 <tr><th>CRC-32</th><td>'.$dvd['d_crc32'].'</td></tr>
 <tr><th>MD5</th><td>'.$dvd['d_md5'].'</td></tr>
 <tr><th>SHA-1</th><td>'.$dvd['d_sha1'].'</td></tr>';
-	
-	if ((defined('ADMIN') || defined('MODERATOR') || defined('DUMPER')) && $dvd['d_ed2k'])
-		echo '<tr><th>ed2k</th><td>'.$dvd['d_ed2k'].'</td></tr>';
-	if ($dvd['d_dol_md5'])
-		echo '<tr><th>DOL MD5</th><td>'.$dvd['d_dol_md5'].'</td></tr>';
-		echo '
+
+	echo '
 </table></div>';
 }
 
@@ -588,7 +584,7 @@ if ($disc['d_media'] == 1 && $disc['d_libcrypt'] != '') {
 			echo sprintf('%02x', ord($array[$i * 15 + 14])).' ';
 		else
 			echo '<span style="color: #ff0000;">'.sprintf('%02x', ord($array[$i * 15 + 14])).'</span> ';
-		
+
 		$crc1 = ord($array[$i * 15 + 13]) * 0x100 + ord($array[$i * 15 + 14]); // crc from image
 		$crc2 = crc16($array2, 10);                                            // generated crc from non-protected sector
 		$crc3 = crc16(array_slice($array, $i * 15 + 3), 10);                   // generated crc from protected sector
@@ -666,7 +662,7 @@ if ($disc['d_media'] == 1 && $disc['d_libcrypt'] != '') {
 							echo 'Data and CRC-16 were dumped with errors';
 				}
 		}
-		
+
 		echo '</td></tr>';
 	}
 	echo '
