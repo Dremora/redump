@@ -11,7 +11,7 @@ $zip = new Zipfile();
 while ($disc = $discs->fetch_array())
 	$zip->addFile($disc['d_cue_contents'], $disc['d_cue_title']);
 echo $zip->file();
-$psxdb['title'] = 'PSXDB - GDI Files ('.$discs->num_rows.')('.date('Y-m-d').').zip';
+$psxdb['title'] = 'Redump - GDI Files ('.$discs->num_rows.')('.date('Y-m-d').').zip';
 downloadText();
 
 ?>
