@@ -20,58 +20,58 @@ include_once 'classes/Form.php';
 
 if (isset($_GET['action'])) {
 	// 1. Checking POST variables
-	
+
 	// a) common info
-	
+
 	// System
 	if ($_POST['d_media'] == '')
 		errorXML('System was not specifyed!'.print_r($_POST, 1));
 	$query = $mysqli->query('SELECT * FROM `systems` AS `s` WHERE `s`.`s_id`='.intval($_POST['d_media']));
 	if (!$system = $query->fetch_array())
 		errorXML('System with ID="'.htmlspecialchars($_POST['d_media']).'" doesn\'t exist!');
-	
+
 	// Title
 	if (strlen($_POST['d_title']) > 255 || $_POST['d_title'] == '')
 		errorXML('Disc title length should be between 1 and 255 characters!');
 	$_POST['d_title'] = str_replace(array(' - ', '  '), array(': ', ' '), $_POST['d_title']);
-	
+
 	// Alternative title
 	if (strlen($_POST['d_title_foreign']) > 255)
 		errorXML('Disc alternative title length shouldn\'t exceed 255 characters!');
 	$_POST['d_title_foreign'] = str_replace(array(' - ', '  '), array(': ', ' '), $_POST['d_title_foreign']);
-	
+
 	// Number
 	if (strlen($_POST['d_number']) > 10)
 		errorXML('Disc number length shouldn\'t exceed 10 characters!');
-	
+
 	// Label / Disc title
 	if (strlen($_POST['d_label']) > 255)
 		errorXML('Disc title length shouldn\'t exceed 255 characters!');
-	
+
 	// Category
 	if (!array_key_exists($_POST['d_category'], $psxdb['categories'])) {
 		errorXML('Please select disc category!');
 	}
-	
+
 	// Region
 	if (!array_key_exists($_POST['d_region'], $psxdb['regions']))
 		errorXML('Please select disc region!');
-	
+
 	// Ring
 	if (strlen($_POST['d_ring']) > 127) {
 		errorXML('Disc ringcode length shouldn\'t exceed 127 characters!');
 	}
-	
+
 	// Ring
 	if ($_POST['d_media'] != 1 && strlen($_POST['d_ring']) < 5) {
 		errorXML('Disc ringcode shouldn\'t be blank!');
 	}
-	
+
 	// Barcode
 	if (strlen($_POST['d_barcode']) > 255) {
 		errorXML('Disc barcode length shouldn\'t exceed 255 characters!');
 	}
-	
+
 	// Languages
 	if ($_POST['d_languages'] != '') {
 		foreach ($_POST['d_languages'] as $language) {
@@ -82,19 +82,19 @@ if (isset($_GET['action'])) {
 		if (strlen($_POST['d_languages']) > 127)
 			errorXML('Please check languages!');
 	}
-	
+
 	// Serial
 	if (strlen($_POST['d_serial']) > 127) {
 		errorXML('Disc serial length shouldn\'t exceed 127 characters!');
 	}
-	
+
 	// EXE date
 	if ($system['s_date']) {
 		if (!preg_match('@^(((19)|(20))[0-9][0-9]-[01][0-9](-[0123][0-9])?)?$@', $_POST['d_date']))
 			errorXML('Disc EXE date should be in YYYY-MM-DD format or blank!');
 	} else
 		unset($_POST['d_date']);
-	
+
 	// EDC
 	if ($system['s_edc']) {
 		if (!preg_match('@^[012]$@', $_POST['d_edc']))
@@ -102,7 +102,7 @@ if (isset($_GET['action'])) {
 	} else {
 		unset($_POST['d_edc']);
 	}
-	
+
 	// Errors count
 	if ($system['s_media'] == 1 && $_POST['d_errors'] != '') {
 		if (!preg_match('@^[0-9]{1,6}$@', $_POST['d_errors'])) {
@@ -111,18 +111,18 @@ if (isset($_GET['action'])) {
 	} else {
 		unset($_POST['d_errors']);
 	}
-	
+
 	// Comments
 	$_POST['d_comments'] = str_replace(array('&amp;lt;', '&amp;gt;'), array('&lt;', '&gt;'), str_replace('&', '&amp;', $_POST['d_comments']));
 	if (strlen($_POST['d_comments']) > 50000)
 		errorXML('Disc comments length shouldn\'t exceed 50000 characters!');
-	
+
 	// b) version
-	
+
 	// Version
 	if (strlen($_POST['d_version']) > 127)
 		errorXML('Disc version length shouldn\'t exceed 127 characters!');
-	
+
 	// Version (datfile)
 	if (defined('ADMIN') || defined('MODERATOR')) {
 		if (strlen($_POST['d_version_datfile']) > 127)
@@ -233,7 +233,7 @@ if (isset($_GET['action'])) {
 		}
 		$tracks_count = $datfile->tracks_count;
 		$tracks = $datfile->tracks;
-			
+
 		// Write offset
 		if ($_POST['d_offset'] != '') {
 			foreach ($_POST['d_offset'] as $offset_value)
@@ -282,14 +282,9 @@ if (isset($_GET['action'])) {
 
 		unset($_POST['d_offset']);
 	}
-	
+
 	// RSS
-	if (defined('ADMIN')) {
-		if (!preg_match('@^1?$@', $_POST['rss']))
-			errorXML('Please check RSS status!');
-	} else {
-		$_POST['rss'] = 1;
-	}
+	$_POST['rss'] = 1;
 	if (!$system['s_public']) {
 		$_POST['rss'] = 0;
 	}
@@ -352,15 +347,15 @@ if (isset($_GET['action'])) {
 	'.(($offset != '') ? '"'.addslashes($offset).'"' : 'NULL').',
 	'.time().',
 	'.time().')';
-	
+
 		if (!$mysqli->query($query))
 			errorXML('Error adding disc info!', str_replace(array("\n", "\r", "\t", '  '), ' ', $query));
-			
+
 		// 3. Querying disc info
 		$query = $mysqli->query('SELECT * FROM `discs`,`systems` WHERE `systems`.`s_id`=`discs`.`d_media` AND `d_id`='.$mysqli->insert_id);
 		if (!$disc = $query->fetch_array())
 			errorXML('Error querying disc info!');
-			
+
 		// 4. Adding dumpers
 		if ($_POST['d_dumpers'] != '') {
 			for ($i = 0; $i < count($_POST['d_dumpers']); $i++) {
@@ -368,7 +363,7 @@ if (isset($_GET['action'])) {
 					errorXML('Error adding dumper '.$_POST['d_dumpers'][$i].'!');
 			}
 		}
-		
+
 		// 5. RSS
 		if ($_POST['rss']) {
 			$rss = new Rss('['.$system['s_short_media'].'][NEW] '.htmlspecialchars(discfilename($disc)), '/disc/'.$disc['d_id'].'/', $disc['d_id']);
@@ -409,7 +404,7 @@ if (isset($_GET['action'])) {
 			$rss->row('SHA-1', $_POST['d_sha1']);
 			$rss->row('DOL MD5', $_POST['d_dol_md5']);
 		}
-		
+
 		// 6. Tracks/DVD data
 		if ($system['s_media'] == 1) {
 			for ($number = 1; $number <= $tracks_count; $number++) {
@@ -525,7 +520,7 @@ if (isset($_GET['action'])) {
 	'.(($_POST['d_sha1'] != '') ? '"'.addslashes($_POST['d_sha1']).'"' : 'NULL').',
 	'.(($_POST['d_ed2k'] != '') ? '"'.addslashes($_POST['d_ed2k']).'"' : 'NULL').',
 	'.(($_POST['d_dol_md5'] != '') ? '"'.addslashes($_POST['d_dol_md5']).'"' : 'NULL').')';
-	
+
 		if (!$mysqli->query($query)) {
 			//errorXML('Error adding disc info!', str_replace(array("\n", "\r", "\t", '  '), ' ', $query));
 			errorXML('Error adding disc info!');
@@ -583,7 +578,7 @@ while (list($key, $language) = each($psxdb['languages']))
 while (list($key, $category) = each($psxdb['categories'])) {
 	$categories[] = array($category, $key);
 }
-	
+
 // 5. Form
 
 // a) common info
@@ -611,7 +606,7 @@ if ($system['s_date']) {
 	$form->text(array('name' => 'd_date', 'caption' => 'EXE date', 'value' => $disc['d_date']));
 }
 if ($system['s_edc']) {
-	$form->radio(array('name' => 'd_edc', 'caption' => 'EDC', 'radio' => array(array(booleaninfo(0), 0), array(booleaninfo(1), 1), array(booleaninfo(2), 2)), 'check' => $disc['d_edc']));
+	$form->radio(array('name' => 'd_edc', 'caption' => 'EDC', 'radio' => array(array(booleaninfo(1), 1), array(booleaninfo(2), 2)), 'check' => $disc['d_edc']));
 }
 if ($system['s_media'] == 1) {
 	$form->text(array('name' => 'd_errors', 'caption' => 'Errors count', 'value' => $disc['d_errors']));
@@ -639,9 +634,9 @@ $form->text(array('name' => 'd_editions_text', 'caption' => 'Other editions/rele
 // c) protection
 if ($system['s_id'] == 1) {
 	$form->fieldset('Copy protection');
-	$form->radio(array('name' => 'd_protection_a', 'caption' => 'Anti-modchip protection', 'radio' => array(array(booleaninfo(0), 0), array(booleaninfo(1), 1), array(booleaninfo(2), 2)), 'check' => $disc['d_protection_a']));
+	$form->radio(array('name' => 'd_protection_a', 'caption' => 'Anti-modchip protection', 'radio' => array(array(booleaninfo(1), 1), array(booleaninfo(2), 2)), 'check' => $disc['d_protection_a']));
 	if (defined('ADMIN') || defined('MODERATOR')) {
-		$form->radio(array('name' => 'd_protection_l', 'caption' => 'LibCrypt protection', 'radio' => array(array(libcrypt(0), 0), array(libcrypt(1), 1), array(libcrypt(2), 2)), 'check' => $disc['d_protection_l']));
+		$form->radio(array('name' => 'd_protection_l', 'caption' => 'LibCrypt protection', 'radio' => array(array(libcrypt(1), 1), array(libcrypt(2), 2)), 'check' => $disc['d_protection_l']));
 		$form->textarea(array('name' => 'd_libcrypt', 'caption' => 'LibCrypt data', 'value' => $disc['d_libcrypt']));
 	} else {
 		$form->textarea(array('name' => 'd_libcrypt', 'caption' => 'LibCrypt data'));
@@ -686,20 +681,16 @@ if ($system['s_media'] == 1) {
 	}
 	$disc['d_offset'] = implode(', ', $disc['d_offset']);
 	$form->checkbox(array('name' => 'd_offset', 'caption' => 'Common write offsets', 'checkbox' => $offsets, 'check' => $offsets_check));
-	$form->text(array('name' => 'd_offset_text', 'caption' => 'Other write offsets', 'value' => $disc['d_offset']));	
+	$form->text(array('name' => 'd_offset_text', 'caption' => 'Other write offsets', 'value' => $disc['d_offset']));
 } else if ($system['s_media'] == 2) {
 	$form->fieldset('Size &amp; checksums');
-	$form->text(array('name' => 'd_size', 'caption' => 'Size', 'value' => $disc['d_size']));	
+	$form->text(array('name' => 'd_size', 'caption' => 'Size', 'value' => $disc['d_size']));
 	$form->text(array('name' => 'd_crc32', 'caption' => 'CRC-32', 'value' => $disc['d_crc32']));
 	$form->text(array('name' => 'd_md5', 'caption' => 'MD5', 'value' => $disc['d_md5']));
 	$form->text(array('name' => 'd_sha1', 'caption' => 'SHA-1', 'value' => $disc['d_sha1']));
-	$form->text(array('name' => 'd_ed2k', 'caption' => 'ed2k', 'value' => $disc['d_ed2k']));
-	$form->text(array('name' => 'd_dol_md5', 'caption' => 'DOL MD5', 'value' => $disc['d_dol_md5']));
 }
 
 // f) other
-if (defined('ADMIN'))
-	$form->checkbox(array('name' => 'rss', 'checkbox' => array(array('Show changes in RSS', 1)), 'check' => array(1)));
 if ((defined('ADMIN') || defined('MODERATOR')) && isset($_GET['id']))
 		$form->hidden(array('name' => 'd_id', 'value' => $disc['d_id']));
 
