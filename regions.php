@@ -7,6 +7,7 @@ $psxdb['regions'] = array(
 	'Au' => 'Australia',
 	'B'  => 'Brazil',
 	'C'  => 'China',
+	'Ca'  => 'Canada',
 	'Cz' => 'Czech',
 	'E'  => 'Europe',
 	'EJ' => 'Europe, Japan',
