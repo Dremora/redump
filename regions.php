@@ -47,10 +47,11 @@ $psxdb['categories'] = array(
 	10 => 'Betas'
 );
 
-$psxdb['languages'] = array('ara', 'chi', 'cze', 'dan', 'dut', 'eng', 'fin', 'fre', 'ger', 'gre', 'hrv', 'hun', 'ita', 'jap', 'kor', 'nor', 'pol', 'por', 'rus', 'slk', 'spa', 'swe', 'tha');
+$psxdb['languages'] = array('ara', 'cat', 'chi', 'cze', 'dan', 'dut', 'eng', 'fin', 'fre', 'ger', 'gre', 'hrv', 'hun', 'ita', 'jap', 'kor', 'nor', 'pol', 'por', 'rus', 'slk', 'spa', 'swe', 'tha');
 
 $psxdb['languages_names'] = array(
 	'ara' => 'Arabic',
+	'cat' => 'Catalan',
 	'chi' => 'Chinese',
 	'hrv' => 'Croatian',
 	'cze' => 'Czech',
@@ -98,7 +99,6 @@ $psxdb['languages_no-intro'] = array(
 	'cze' => 'Cs',
 	'slk' => 'Sk',
 	'ara' => 'Ar',
+	'cat' => 'Ca',
 	'tha' => 'Th'
 );
-
-?>
